@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy · PupFlow</title><link rel="icon" type="image/png" href="favicon.png"><meta name="robots" content="noindex">
+<style>
+:root{--teal:#1F6F78;--deep:#154E55;--orange:#F28C38;--text:#22313F;--soft:#EEF6F6}
+*{box-sizing:border-box}body{margin:0;background:#fff;color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.top{background:var(--soft);padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.top a.home{color:var(--deep);font-weight:800;font-size:20px;text-decoration:none}.top a.home span{color:var(--teal)}
+.lang button{border:1px solid var(--teal);background:#fff;color:var(--teal);padding:6px 12px;border-radius:999px;font:inherit;font-size:14px;cursor:pointer}
+.lang button[aria-pressed=true]{background:var(--teal);color:#fff}
+main{max-width:720px;margin:0 auto;padding:24px 16px 64px}h1{color:var(--deep);line-height:1.2}h2{color:var(--teal);font-size:19px;margin-top:28px}
+a{color:var(--teal)}.upd{color:#5b6b78;font-size:14px}.back{display:inline-block;margin-top:32px;background:var(--orange);color:#fff;padding:10px 18px;border-radius:999px;text-decoration:none;font-weight:700}
+[data-l]{display:none}html[lang=en] [data-l=en],html[lang=es] [data-l=es]{display:block}
+</style></head><body>
+<div class="top"><a class="home" href="index.html">Pup<span>Flow</span></a>
+<div class="lang"><button data-set="en">English</button> <button data-set="es">Español</button></div></div>
+<main>
+<section data-l="en"><h1>Privacy Policy</h1><p class="upd">Last updated: October 2026</p>
+<p>This policy explains what information PupFlow collects and how we use it.</p>
+<h2>What we collect</h2><ul><li>Your first name and email.</li><li>Information about your dog that you enter in our form (name, breed, age, weight, home, habits, health answers) and, if you choose, a photo of your dog.</li><li>Payment confirmation from PayPal (we never see or store your card details).</li><li>The free preview on our website runs in your browser; what you type there is not sent to us.</li></ul>
+<h2>How we use it</h2><p>Only to create your plan, deliver it by email, answer your support requests and keep records of your purchase. If you tick the box allowing it, we may share your dog's photo on our social media; you can withdraw that permission at any time.</p>
+<h2>Who processes it</h2><p>We use service providers to run the business: PayPal (payments), form and automation tools, an AI provider that helps write parts of your plan, and an email provider. They process data only to provide those services. We do not sell your personal information.</p>
+<h2>Cookies and storage</h2><p>The website stores your language choice in your browser. If we add advertising measurement tools (such as the Meta Pixel), we will update this policy.</p>
+<h2>How long we keep it</h2><p>We keep purchase records as long as needed for support, refunds, disputes and legal obligations.</p>
+<h2>Your choices</h2><p>You can ask us to access, correct or delete your information at any time: contact us by email.</p>
+<h2>Children</h2><p>Our service is not directed to children under 13.</p><a class="back" href="index.html?lang=en">Back to PupFlow</a></section>
+<section data-l="es" lang="es"><h1>Política de privacidad</h1><p class="upd">Última actualización: octubre de 2026</p>
+<p>Esta política explica qué información recopila PupFlow y cómo la usamos.</p>
+<h2>Qué recopilamos</h2><ul><li>Tu nombre y tu email.</li><li>La información sobre tu perro que cargas en el formulario (nombre, raza, edad, peso, hogar, hábitos, respuestas de salud) y, si quieres, una foto de tu perro.</li><li>La confirmación de pago de PayPal (nunca vemos ni guardamos los datos de tu tarjeta).</li><li>La vista previa gratis del sitio funciona en tu navegador; lo que escribes ahí no nos llega.</li></ul>
+<h2>Para qué la usamos</h2><p>Solo para armar tu plan, enviártelo por email, responder tus consultas y guardar el registro de tu compra. Si marcas la casilla que lo permite, podemos compartir la foto de tu perro en nuestras redes sociales; puedes retirar ese permiso cuando quieras.</p>
+<h2>Quién la procesa</h2><p>Usamos proveedores para funcionar: PayPal (pagos), herramientas de formularios y automatización, un proveedor de IA que ayuda a escribir partes de tu plan y un proveedor de email. Solo procesan los datos para darnos esos servicios. No vendemos tu información personal.</p>
+<h2>Cookies y almacenamiento</h2><p>El sitio guarda en tu navegador el idioma que elegiste. Si sumamos herramientas de medición de anuncios (como el Píxel de Meta), actualizaremos esta política.</p>
+<h2>Cuánto tiempo la guardamos</h2><p>Guardamos los registros de compra el tiempo necesario para soporte, reembolsos, reclamos y obligaciones legales.</p>
+<h2>Tus opciones</h2><p>Puedes pedirnos ver, corregir o borrar tu información cuando quieras: escríbenos por email.</p>
+<h2>Menores</h2><p>Nuestro servicio no está dirigido a menores de 13 años.</p><a class="back" href="index.html?lang=es">Volver a PupFlow</a></section>
+</main>
+<script>
+const T={en:'Privacy Policy',es:'Política de privacidad'};
+function set(l){document.documentElement.lang=l;document.title=T[l]+" · PupFlow";
+document.querySelectorAll("[data-set]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.set===l));
+try{localStorage.setItem("pf-lang",l)}catch(e){}}
+let l="en";try{const q=new URLSearchParams(location.search).get("lang");const s=localStorage.getItem("pf-lang");
+l=(q==="es"||q==="en")?q:(s==="es"||s==="en")?s:(/^es\b/i.test(navigator.language||"")?"es":"en")}catch(e){}
+set(l);document.querySelectorAll("[data-set]").forEach(b=>b.onclick=()=>set(b.dataset.set));
+</script></body></html>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terms of Sale · PupFlow</title><link rel="icon" type="image/png" href="favicon.png"><meta name="robots" content="noindex">
+<style>
+:root{--teal:#1F6F78;--deep:#154E55;--orange:#F28C38;--text:#22313F;--soft:#EEF6F6}
+*{box-sizing:border-box}body{margin:0;background:#fff;color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.top{background:var(--soft);padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.top a.home{color:var(--deep);font-weight:800;font-size:20px;text-decoration:none}.top a.home span{color:var(--teal)}
+.lang button{border:1px solid var(--teal);background:#fff;color:var(--teal);padding:6px 12px;border-radius:999px;font:inherit;font-size:14px;cursor:pointer}
+.lang button[aria-pressed=true]{background:var(--teal);color:#fff}
+main{max-width:720px;margin:0 auto;padding:24px 16px 64px}h1{color:var(--deep);line-height:1.2}h2{color:var(--teal);font-size:19px;margin-top:28px}
+a{color:var(--teal)}.upd{color:#5b6b78;font-size:14px}.back{display:inline-block;margin-top:32px;background:var(--orange);color:#fff;padding:10px 18px;border-radius:999px;text-decoration:none;font-weight:700}
+[data-l]{display:none}html[lang=en] [data-l=en],html[lang=es] [data-l=es]{display:block}
+</style></head><body>
+<div class="top"><a class="home" href="index.html">Pup<span>Flow</span></a>
+<div class="lang"><button data-set="en">English</button> <button data-set="es">Español</button></div></div>
+<main>
+<section data-l="en"><h1>Terms of Sale</h1><p class="upd">Last updated: October 2026</p>
+<p>These terms apply when you buy a PupFlow plan. By paying, you agree to them.</p>
+<h2>What you buy</h2><p>A personalized 90-day dog training and feeding plan in PDF, created from the answers you give in our form after payment, and delivered to the email you provide. Price is shown on the website before you pay. Payment is processed by PayPal.</p>
+<h2>General guidance, not veterinary advice</h2><p>The plan offers general educational guidance on training, routines and feeding. It is not veterinary or medical advice and does not replace an exam by a veterinarian or a session with a professional trainer. Always consult your veterinarian about your dog's health, diet or weight. If your dog has a medical condition, has bitten, or shows aggression, work with a professional.</p>
+<h2>Results</h2><p>Every dog is different. Results depend on consistency and on each dog, so we cannot guarantee specific results or timelines.</p>
+<h2>Your answers</h2><p>The plan is based on what you tell us. Please answer accurately. If you made a mistake, we correct it once for free within 7 days of purchase.</p>
+<h2>Refunds</h2><p>Plans are personalized digital products, so all sales are final except in the cases described in our <a href="index.html?lang=en#refund">Refund Policy</a>.</p>
+<h2>Personal use</h2><p>Your plan is for your personal, non-commercial use. Please do not resell or redistribute it.</p>
+<h2>Liability</h2><p>To the extent allowed by law, PupFlow is not liable for indirect damages arising from the use of the plan, and our total liability is limited to the amount you paid for it.</p>
+<h2>Contact</h2><p>Questions? contact us by email.</p><a class="back" href="index.html?lang=en">Back to PupFlow</a></section>
+<section data-l="es" lang="es"><h1>Términos de venta</h1><p class="upd">Última actualización: octubre de 2026</p>
+<p>Estos términos se aplican cuando compras un plan de PupFlow. Al pagar, los aceptas.</p>
+<h2>Qué compras</h2><p>Un plan personalizado de 90 días de entrenamiento y alimentación para tu perro, en PDF, armado con las respuestas que das en nuestro formulario después de pagar, y enviado al email que nos indicas. El precio se muestra en el sitio antes de pagar. El pago lo procesa PayPal.</p>
+<h2>Guía general, no consejo veterinario</h2><p>El plan es una guía educativa general sobre entrenamiento, rutinas y alimentación. No es consejo veterinario ni médico y no reemplaza la consulta con un veterinario ni el trabajo con un adiestrador profesional. Consulta siempre a tu veterinario sobre la salud, la dieta o el peso de tu perro. Si tu perro tiene una enfermedad, mordió o muestra agresividad, trabaja con un profesional.</p>
+<h2>Resultados</h2><p>Cada perro es distinto. Los resultados dependen de la constancia y de cada perro, así que no podemos garantizar resultados ni plazos.</p>
+<h2>Tus respuestas</h2><p>El plan se basa en lo que nos cuentas. Responde con cuidado. Si te equivocaste, lo corregimos una vez sin costo dentro de los 7 días de la compra.</p>
+<h2>Reembolsos</h2><p>Los planes son productos digitales personalizados, por eso todas las ventas son finales, salvo los casos de nuestra <a href="index.html?lang=es#refund">Política de reembolso</a>.</p>
+<h2>Uso personal</h2><p>Tu plan es para uso personal y no comercial. No lo revendas ni lo distribuyas.</p>
+<h2>Responsabilidad</h2><p>En la medida que lo permita la ley, PupFlow no responde por daños indirectos derivados del uso del plan, y su responsabilidad total se limita a lo que pagaste por él.</p>
+<h2>Contacto</h2><p>¿Dudas? escríbenos por email.</p><a class="back" href="index.html?lang=es">Volver a PupFlow</a></section>
+</main>
+<script>
+const T={en:'Terms of Sale',es:'Términos de venta'};
+function set(l){document.documentElement.lang=l;document.title=T[l]+" · PupFlow";
+document.querySelectorAll("[data-set]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.set===l));
+try{localStorage.setItem("pf-lang",l)}catch(e){}}
+let l="en";try{const q=new URLSearchParams(location.search).get("lang");const s=localStorage.getItem("pf-lang");
+l=(q==="es"||q==="en")?q:(s==="es"||s==="en")?s:(/^es\b/i.test(navigator.language||"")?"es":"en")}catch(e){}
+set(l);document.querySelectorAll("[data-set]").forEach(b=>b.onclick=()=>set(b.dataset.set));
+</script></body></html>
