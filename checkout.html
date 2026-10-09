@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Checkout · PupFlow</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+:root{--teal:#1F6F78;--deep:#154E55;--orange:#F28C38;--cream:#FFF6EC;--mint:#EEF6F6;--ink:#22313F;--soft:#5b6b78;--line:#e3ecee}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.top{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;max-width:1040px;margin:0 auto}
+.top img{height:34px}
+.lang{display:inline-flex;padding:3px;border-radius:999px;background:var(--mint);border:1px solid var(--line);gap:2px}
+.lang button{border:0;background:transparent;font:800 13px/1 inherit;color:var(--soft);min-width:40px;min-height:32px;border-radius:999px;cursor:pointer}
+.lang button[aria-pressed=true]{background:var(--teal);color:#fff}
+.test{display:none;background:#FFE7CF;color:#7a3f00;text-align:center;font-size:14px;font-weight:700;padding:8px 16px}
+.test.on{display:block}
+main{max-width:1040px;margin:0 auto;padding:16px 16px 64px;display:grid;gap:28px}
+@media(min-width:860px){main{grid-template-columns:1.05fr .95fr;align-items:start;padding-top:36px}}
+h1{font-size:clamp(26px,4vw,36px);line-height:1.15;margin:0 0 10px;color:var(--deep)}
+.lead{color:var(--soft);margin:0 0 18px}
+.card{border:1px solid var(--line);border-radius:22px;padding:22px;background:#fff;box-shadow:0 24px 50px -40px rgba(21,78,85,.5)}
+.sum{background:var(--cream);border-color:#f6e2cc}
+.row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px dashed #ecd6bd}
+.row:last-child{border-bottom:0;font-weight:800;font-size:18px}
+ul{padding-left:20px;margin:10px 0 0;color:var(--ink)}li{margin:4px 0}
+.pp-box{min-height:120px}
+.msg{display:none;margin-top:14px;padding:12px 14px;border-radius:12px;font-size:15px}
+.msg.on{display:block}.msg.err{background:#fde8e8;color:#8a1c1c}.msg.ok{background:#e6f6ec;color:#1d5b33}
+.safe{display:flex;gap:8px;align-items:center;justify-content:center;color:var(--soft);font-size:14px;margin-top:12px}
+.rf{color:var(--soft);font-size:13px;text-align:center;margin:10px 0 0}
+.rf a,.back{color:var(--teal)}
+.back{display:inline-block;margin-top:14px;font-size:14px}
+.spin{width:28px;height:28px;border:3px solid var(--mint);border-top-color:var(--teal);border-radius:50%;animation:s 1s linear infinite;margin:40px auto}
+@keyframes s{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="test" id="test"></div>
+<div class="top"><a href="index.html" id="home"><img src="logo.png" alt="PupFlow"></a>
+  <div class="lang"><button data-l="en">EN</button><button data-l="es">ES</button></div></div>
+<main>
+  <section>
+    <h1 data-t="h1"></h1>
+    <p class="lead" data-t="lead"></p>
+    <div class="card sum">
+      <div class="row"><span data-t="item"></span><span id="price1"></span></div>
+      <div class="row"><span data-t="planlang"></span><span id="pl"></span></div>
+      <div class="row"><span data-t="total"></span><span id="price2"></span></div>
+      <ul><li data-t="b1"></li><li data-t="b2"></li><li data-t="b3"></li></ul>
+    </div>
+  </section>
+  <section class="card">
+    <h2 style="margin:0 0 12px;font-size:20px;color:var(--deep)" data-t="pay"></h2>
+    <div class="pp-box" id="pp"><div class="spin"></div></div>
+    <div class="msg" id="msg"></div>
+    <div class="safe"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="7" width="10" height="7" rx="1.5"/><path d="M5 7V5a3 3 0 0 1 6 0v2"/></svg><span data-t="safe"></span></div>
+    <p class="rf"><span data-t="rf"></span> <a href="index.html#refund" data-t="rfa"></a>.</p>
+    <a class="back" href="index.html" id="back" data-t="back"></a>
+  </section>
+</main>
+<script>
+const T = {
+  en: { h1: "One step left: your payment", lead: "Pay once with PayPal or card. Right after, you answer 15 quick questions about your dog and your plan arrives by email.",
+        item: "PupFlow 90-day plan", planlang: "Plan language", total: "Total", langName: { en: "English", es: "Spanish" },
+        b1: "Personalized PDF built from your answers", b2: "Feeding, daily routine and 2 training programs", b3: "One-time payment. No subscription.",
+        pay: "Choose how to pay", safe: "Secure payment processed by PayPal. We never see your card details.",
+        rf: "Digital product. All sales final, except as described in our", rfa: "Refund Policy", back: "← Back to PupFlow",
+        test: "TEST MODE · Payments here are not real", wait: "Confirming your payment…",
+        off: "Checkout is being set up. Please try again soon.", fail: "We couldn't complete the payment. You were not charged. Please try again.",
+        notPaid: "PayPal didn't confirm the payment. If you were charged, write to us and we'll fix it right away.", ok: "Payment confirmed! Taking you to the form…" },
+  es: { h1: "Último paso: tu pago", lead: "Pagas una sola vez con PayPal o tarjeta. Enseguida respondes 15 preguntas rápidas sobre tu perro y tu plan te llega por email.",
+        item: "Plan PupFlow de 90 días", planlang: "Idioma del plan", total: "Total", langName: { en: "Inglés", es: "Español" },
+        b1: "PDF personalizado armado con tus respuestas", b2: "Alimentación, rutina diaria y 2 programas de entrenamiento", b3: "Pago único. Sin suscripción.",
+        pay: "Elige cómo pagar", safe: "Pago seguro procesado por PayPal. Nunca vemos los datos de tu tarjeta.",
+        rf: "Producto digital. Sin reembolsos, salvo los casos de nuestra", rfa: "Política de reembolso", back: "← Volver a PupFlow",
+        test: "MODO PRUEBA · Los pagos acá no son reales", wait: "Confirmando tu pago…",
+        off: "Estamos terminando de configurar el pago. Vuelve a intentarlo pronto.", fail: "No pudimos completar el pago. No se te cobró nada. Inténtalo de nuevo.",
+        notPaid: "PayPal no confirmó el pago. Si se te cobró, escríbenos y lo resolvemos enseguida.", ok: "¡Pago confirmado! Te llevamos al formulario…" }
+};
+const q = new URLSearchParams(location.search);
+let lang = q.get("lang") === "es" || q.get("lang") === "en" ? q.get("lang") : (/^es\b/i.test(navigator.language || "") ? "es" : "en");
+const planLang = q.get("plan_lang") === "es" ? "es" : (q.get("plan_lang") === "en" ? "en" : lang);
+let price = "29.00";
+const $ = id => document.getElementById(id);
+function msg(kind, text) { const m = $("msg"); m.className = "msg on " + kind; m.textContent = text; }
+function paint() {
+  const t = T[lang]; document.documentElement.lang = lang;
+  document.querySelectorAll("[data-t]").forEach(e => e.textContent = t[e.dataset.t]);
+  $("pl").textContent = t.langName[planLang];
+  $("price1").textContent = $("price2").textContent = "US$" + price.replace(/\.00$/, "");
+  $("test").textContent = t.test;
+  $("home").href = $("back").href = "index.html?lang=" + lang;
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.l === lang));
+}
+document.querySelectorAll(".lang button").forEach(b => b.onclick = () => { lang = b.dataset.l; try { localStorage.setItem("pf-lang", lang); } catch (e) {} paint(); });
+paint();
+
+async function post(fn, body) {
+  const r = await fetch("/.netlify/functions/" + fn, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+  const d = await r.json().catch(() => ({})); d._status = r.status; return d;
+}
+function loadSdk(clientId) {
+  return new Promise((ok, bad) => {
+    const s = document.createElement("script");
+    s.src = "https://www.paypal.com/sdk/js?client-id=" + encodeURIComponent(clientId) + "&currency=USD&intent=capture&locale=" + (lang === "es" ? "es_US" : "en_US");
+    s.onload = ok; s.onerror = bad; document.head.appendChild(s);
+  });
+}
+(async () => {
+  let cfg = {};
+  try { cfg = await (await fetch("/.netlify/functions/config")).json(); } catch (e) {}
+  if (cfg.price) { price = cfg.price; paint(); }
+  if (cfg.env !== "live") $("test").classList.add("on");
+  if (!cfg.clientId) { $("pp").textContent = ""; msg("err", T[lang].off); return; }
+  try { await loadSdk(cfg.clientId); } catch (e) { $("pp").textContent = ""; msg("err", T[lang].off); return; }
+  $("pp").textContent = "";
+  paypal.Buttons({
+    style: { layout: "vertical", shape: "pill", label: "pay" },
+    createOrder: async () => {
+      const d = await post("create-order", { plan_lang: planLang });
+      if (!d.id) { msg("err", T[lang].fail); throw new Error("create"); }
+      return d.id;
+    },
+    onApprove: async data => {
+      msg("ok", T[lang].wait);
+      const d = await post("capture-order", { orderID: data.orderID });
+      if (!d.ok) { msg("err", T[lang].notPaid); return; }
+      const purchase = { order: d.order, token: d.token, plan_lang: d.plan_lang, email: d.email };
+      try { localStorage.setItem("pf-purchase", JSON.stringify(purchase)); } catch (e) {}
+      msg("ok", T[lang].ok);
+      const u = new URLSearchParams({ order: d.order, t: d.token, plan_lang: d.plan_lang, lang });
+      location.assign("form.html?" + u.toString());
+    },
+    onError: () => msg("err", T[lang].fail)
+  }).render("#pp");
+})();
+</script>
+</body>
+</html>

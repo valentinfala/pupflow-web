@@ -855,7 +855,9 @@ const CONFIG = {
   // "plan_lang=en|es" is added to it instead. While all are empty, the buttons show a "not connected" notice.
   PAYPAL_URL_EN: "",
   PAYPAL_URL_ES: "",
-  PAYPAL_URL: ""
+  PAYPAL_URL: "",
+  // Own checkout page with PayPal buttons; payment is verified by the site's functions. Takes priority.
+  CHECKOUT_PAGE: "checkout.html"
 };
 /* ======================================= */
 
@@ -1118,6 +1120,7 @@ const CONFIG = {
   }
   const pick = $("#pick");
   function checkoutUrl(pl) {
+    if (CONFIG.CHECKOUT_PAGE) return CONFIG.CHECKOUT_PAGE + "?plan_lang=" + pl + "&lang=" + lang;
     const direct = pl === "es" ? CONFIG.PAYPAL_URL_ES : CONFIG.PAYPAL_URL_EN;
     if (direct) return direct;
     if (!CONFIG.PAYPAL_URL) return "";
