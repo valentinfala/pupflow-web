@@ -8,4 +8,4 @@ Se genera desde `plan-mascotas/landing/src/make_publish.py` en el proyecto; no e
 
 `checkout.html` muestra los botones de PayPal; las funciones en `netlify/functions/` crean y verifican el pago y reciben el formulario (`form.html`). Configuración en Netlify > Environment variables: `PAYPAL_ENV`, `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET`, `ORDER_SECRET`, `MAKE_WEBHOOK_URL` (detalle en `netlify/lib/shared.mjs`).
 
-Cada formulario que llega a la automatización trae `payment_status` leído de PayPal en ese momento. Solo se arma el PDF si dice `COMPLETED`; si dice `PENDING`, hay que aceptar el pago en PayPal primero.
+Cada formulario se guarda en Netlify Blobs (`netlify/lib/orders.mjs`) con el `payment_status` leído de PayPal, y arranca el generador del plan (repositorio privado `pupflow-engine`, GitHub Actions). El generador solo arma el PDF si el pago dice `COMPLETED`. `engine-api` es la API privada del generador (clave `ENGINE_SECRET`) y `approve` son los botones del mail de revisión. Variables extra en Netlify: `ENGINE_SECRET`, `GITHUB_TOKEN`, `ENGINE_REPO`.
