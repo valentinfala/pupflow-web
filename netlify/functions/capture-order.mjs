@@ -13,12 +13,16 @@ export default async req => {
     if (!r.ok) return json(402, { error: "capture_failed", detail: r.data && (r.data.details?.[0]?.issue || r.data.name) });
     const o = r.data, pu = (o.purchase_units || [])[0] || {};
     const cap = ((pu.payments || {}).captures || [])[0] || {};
-    const paid = o.status === "COMPLETED" && cap.status === "COMPLETED"
+    // A capture can be PENDING only because the seller account must accept the currency
+    // (common for Argentine accounts receiving USD). The buyer already paid, so we accept that one reason.
+    const reason = (cap.status_details || {}).reason || "";
+    const capOk = cap.status === "COMPLETED" || (cap.status === "PENDING" && reason === "RECEIVING_PREFERENCE_MANDATES_MANUAL_ACTION");
+    const paid = o.status === "COMPLETED" && capOk
       && cap.amount && cap.amount.currency_code === "USD" && Number(cap.amount.value) >= Number(PRICE());
-    if (!paid) return json(402, { error: "not_paid", status: o.status, capture: cap.status });
+    if (!paid) return json(402, { error: "not_paid", status: o.status, capture: cap.status, reason });
     const pl = LANG(String(pu.custom_id || "").replace("plan_lang:", ""));
     return json(200, {
-      ok: true, order: o.id, capture_id: cap.id, plan_lang: pl,
+      ok: true, order: o.id, capture_id: cap.id, payment_status: cap.status, plan_lang: pl,
       email: (o.payer && o.payer.email_address) || "",
       token: sign(o.id, pl),
     });

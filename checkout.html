@@ -126,8 +126,11 @@ function loadSdk(clientId) {
     },
     onApprove: async data => {
       msg("ok", T[lang].wait);
-      const d = await post("capture-order", { orderID: data.orderID });
-      if (!d.ok) { msg("err", T[lang].notPaid); return; }
+      let d; try { d = await post("capture-order", { orderID: data.orderID }); } catch (e) { d = { error: "network" }; }
+      if (!d.ok) {
+        const code = [d._status, d.error, d.detail, d.capture, d.reason].filter(Boolean).join(" · ");
+        msg("err", T[lang].notPaid + " (" + code + ")"); return;
+      }
       const purchase = { order: d.order, token: d.token, plan_lang: d.plan_lang, email: d.email };
       try { localStorage.setItem("pf-purchase", JSON.stringify(purchase)); } catch (e) {}
       msg("ok", T[lang].ok);
