@@ -667,8 +667,8 @@ footer .brand { color: #fff; }
       </div>
       <div class="book-copy">
         <span class="eyebrow">Look inside</span>
-        <h2>The real plan we made for Bella.</h2>
-        <p class="lede">Bella is a fictional 8-month Golden Retriever in an apartment. Your plan follows the same 14 pages, written around your dog.</p>
+        <h2 id="smpH">The real plan we made for Bella.</h2>
+        <p class="lede" id="smpP">Bella is a fictional 8-month Golden Retriever in an apartment. Your plan follows the same 14 pages, written around your dog.</p>
         <div class="progress" id="bookProg"><div></div></div>
         <div class="tabs" role="tablist" id="bookTabs">
           <button role="tab" aria-selected="true"><span class="pg">p.1</span><span><b>A cover with your dog's name</b><small>Breed, age, weight and home on the front</small></span></button>
@@ -866,7 +866,7 @@ const CONFIG = {
   } catch (e) {}
   const es = () => lang === "es";
   const NAME_SEL = ".js-pos,.js-pos-sim,.js-pos-hero,.js-name-or";
-  const SKIP_SEL = "#probs,#mods,#prioList,#cmpCard,.rot-text,#wout,#kcal,.js-cal,#meals,#pcount,script,style,[data-price],[data-price-big],.count,.lang";
+  const SKIP_SEL = "#smpH,#smpP,#probs,#mods,#prioList,#cmpCard,.rot-text,#wout,#kcal,.js-cal,#meals,#pcount,script,style,[data-price],[data-price-big],.count,.lang";
   // Capture the English originals once, before anything else edits the page.
   const textNodes = [], patEls = [], attrEls = [];
   (function capture() {
@@ -901,8 +901,23 @@ const CONFIG = {
   let dogName = "";
   const clean = s => s.replace(/[^\p{L}\p{M}' .-]/gu, "").trim().slice(0, 16);
   const pos = n => n + (/s$/i.test(n) ? "'" : "'s");
+  function applySample(n) {
+    const h = $("#smpH"), p = $("#smpP"); if (!h || !p) return;
+    if (es()) {
+      h.textContent = n ? "Así va a ser el plan de " + n + "." : "El plan real que hicimos para Bella.";
+      p.textContent = n
+        ? "Esta muestra es de Bella, una Golden Retriever ficticia de 8 meses que vive en un departamento. El plan de " + n + " tiene las mismas 14 páginas, escritas con sus datos. Páginas de muestra en inglés."
+        : "Bella es una Golden Retriever ficticia de 8 meses que vive en un departamento. Tu plan tiene las mismas 14 páginas, escritas para tu perro. Páginas de muestra en inglés.";
+    } else {
+      h.textContent = n ? "Here's what " + pos(n) + " plan will look like." : "The real plan we made for Bella.";
+      p.textContent = n
+        ? "This sample is for Bella, a fictional 8-month Golden Retriever in an apartment. " + pos(n) + " plan follows the same 14 pages, written around " + n + "."
+        : "Bella is a fictional 8-month Golden Retriever in an apartment. Your plan follows the same 14 pages, written around your dog.";
+    }
+  }
   function applyName() {
     const n = dogName;
+    applySample(n);
     if (es()) {
       // Spanish puts the name after "de": "el plan de Bella" / "el plan de tu perro"
       $$(".js-pos").forEach(el => el.textContent = n || "tu perro");
