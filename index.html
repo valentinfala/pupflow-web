@@ -311,9 +311,10 @@ input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border-radius
 /* Modules */
 .mods { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
 .mod { perspective: 900px; min-height: 196px; border: 0; padding: 0; background: none; cursor: pointer; font: inherit; color: inherit; text-align: left; }
-.mod-in { position: relative; width: 100%; height: 100%; min-height: 196px; transition: transform .6s cubic-bezier(.2,.8,.2,1); transform-style: preserve-3d; }
-.mod:hover .mod-in, .mod.flip .mod-in { transform: rotateY(180deg); }
-.face-f, .face-b { position: absolute; inset: 0; border-radius: 18px; padding: 18px; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: grid; align-content: space-between; gap: 10px; }
+.mod-in { position: relative; display: grid; width: 100%; height: 100%; min-height: 196px; transition: transform .6s cubic-bezier(.2,.8,.2,1); transform-style: preserve-3d; }
+@media (hover: hover) { .mod:hover .mod-in { transform: rotateY(180deg); } }
+.mod.flip .mod-in { transform: rotateY(180deg); }
+.face-f, .face-b { position: relative; grid-area: 1 / 1; min-width: 0; border-radius: 18px; padding: 18px; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: grid; align-content: space-between; gap: 10px; }
 .face-f { background: var(--white); border: 2px solid var(--line); }
 .face-f .ico { width: 46px; height: 46px; border-radius: 14px; background: var(--mint); display: grid; place-items: center; }
 .mod:nth-child(odd) .face-f .ico { background: var(--cream); }
@@ -323,6 +324,9 @@ input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border-radius
 .face-b { background: var(--teal); color: #fff; transform: rotateY(180deg); font-size: .88rem; line-height: 1.45; }
 .face-b small { font-weight: 800; letter-spacing: .1em; font-size: .7rem; color: var(--orange); }
 
+.face-b em { display: flex; align-items: flex-start; gap: 6px; font-style: normal; font-weight: 700; font-size: .8rem; line-height: 1.3; }
+.face-b em svg { flex: none; margin-top: 2px; }
+.face-f b, .face-b .m90 { overflow-wrap: anywhere; hyphens: auto; }
 /* Safety */
 .safety { background: var(--teal-deep); color: #fff; border-radius: 40px; margin-inline: 12px; overflow: hidden; }
 .safety h2 { color: #fff; }
@@ -513,6 +517,19 @@ footer .brand { color: #fff; }
   .reveal { opacity: 1; transform: none; }
   html { scroll-behavior: auto; }
 }
+#pcount { white-space: nowrap; }
+.tabs .pg { white-space: nowrap; }
+@media (max-width: 640px) {
+  .btn { padding: 0 20px; gap: 10px; }
+  .cta-in .btn, .sheet-cta { width: 100%; }
+  .tabs button { grid-template-columns: 48px 1fr; }
+  .tabs .pg { width: 48px; font-size: .74rem; }
+  .offer-r { padding-bottom: 96px; }
+  .offer-dog { width: 104px; right: -8px; bottom: -16px; }
+  /* Narrow buttons: the price is already in the sticky bar, so drop it here and keep the label on 1 or 2 lines */
+  .cta-in .btn .tag, .sheet-cta .tag { display: none; }
+  .btn { font-size: 1rem; }
+}
 </style>
 
 <!-- ===== Reusable dog faces (colors come from CSS variables on each <svg>) ===== -->
@@ -640,6 +657,21 @@ footer .brand { color: #fff; }
     </div>
   </section>
 
+  <!-- EXAMPLE DOGS -->
+  <section class="stories-sec" id="examples">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="eyebrow">One plan per dog</span>
+        <h2>Six dogs. Six completely different plans.</h2>
+        <p class="lede">Same problems, different dogs, different answers. Here's what PupFlow builds for dogs like these, and where each one should be by day 90.</p>
+      </div>
+      <div class="stories" id="stories"></div>
+      <div class="stories-dots" id="storyDots"></div>
+      <p class="stories-note" id="storiesNote"></p>
+      <div class="stories-cta"><a class="btn js-buy shine" href="#buy"><svg class="lk"><use href="#lock"/></svg><span>Get the plan made for <span class="js-name-or">your dog</span></span><span class="tag" data-price>$29</span></a></div>
+    </div>
+  </section>
+
   <!-- SIMULATOR -->
   <section class="sim" id="try">
     <div class="wrap">
@@ -760,39 +792,6 @@ footer .brand { color: #fff; }
     </div>
   <div class="wrap cta-band reveal-skip"><div class="cta-in"><div><b>Pick your 2. Unlock the full programs.</b><span>Every program comes with steps, troubleshooting and 30/60/90-day milestones.</span></div><a class="btn js-buy" href="#buy"><svg class="lk"><use href="#lock"/></svg><span>Unlock <span class="js-pos">your dog's</span> plan</span><span class="tag" data-price>$29</span></a></div></div>
 
-  </section>
-
-  <!-- SAFETY -->
-  <section class="safety">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Safe by design</span>
-        <h2>Your answers change what goes in the plan.</h2>
-        <p class="lede">Some situations need more than a PDF. The plan checks for them and adjusts automatically.</p>
-      </div>
-      <div class="rules">
-        <div class="rule"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg></span><h3>Reward-based only</h3><p>No leash jerks, shouting or pushing. Every step uses positive reinforcement.</p></div>
-        <div class="rule"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg></span><h3>Bite history? We adjust</h3><p>Close-contact exercises come out, safe management goes in, and we point you to a certified trainer.</p></div>
-        <div class="rule"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span><h3>Health comes first</h3><p>If your dog has a medical condition or a vet diet, we don't touch the food plan. Your vet stays in charge.</p></div>
-        <div class="rule"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></span><h3>Right for the age</h3><p>From 8-week puppies to seniors, calories and routines change with your dog's life stage.</p></div>
-      </div>
-      <div style="margin-top:40px"><a class="btn js-buy shine" href="#buy"><svg class="lk"><use href="#lock"/></svg><span>Unlock <span class="js-pos">your dog's</span> safe plan</span><span class="tag" data-price>$29</span></a></div>
-    </div>
-  </section>
-
-  <!-- EXAMPLE DOGS -->
-  <section class="stories-sec" id="examples">
-    <div class="wrap">
-      <div class="section-head center">
-        <span class="eyebrow">One plan per dog</span>
-        <h2>Six dogs. Six completely different plans.</h2>
-        <p class="lede">Same problems, different dogs, different answers. Here's what PupFlow builds for dogs like these, and where each one should be by day 90.</p>
-      </div>
-      <div class="stories" id="stories"></div>
-      <div class="stories-dots" id="storyDots"></div>
-      <p class="stories-note" id="storiesNote"></p>
-      <div class="stories-cta"><a class="btn js-buy shine" href="#buy"><svg class="lk"><use href="#lock"/></svg><span>Get the plan made for <span class="js-name-or">your dog</span></span><span class="tag" data-price>$29</span></a></div>
-    </div>
   </section>
 
   <!-- OFFER -->
