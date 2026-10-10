@@ -22,7 +22,7 @@ export default async req => {
     if (!paid) return json(402, { error: "not_paid", status: o.status, capture: cap.status, reason });
     const pl = LANG(String(pu.custom_id || "").replace("plan_lang:", ""));
     return json(200, {
-      ok: true, order: o.id, capture_id: cap.id, payment_status: cap.status, plan_lang: pl,
+      ok: true, order: o.id, capture_id: cap.id, payment_status: cap.status, plan_lang: pl, value: cap.amount.value,
       email: (o.payer && o.payer.email_address) || "",
       token: sign(o.id, pl),
     });
