@@ -23,7 +23,9 @@ export async function paymentStatus(order) {
   try {
     const r = await paypal(`/v2/checkout/orders/${encodeURIComponent(order)}`, { method: "GET" });
     const cap = (((r.data.purchase_units || [])[0] || {}).payments || {}).captures?.[0] || {};
-    if (r.ok) return { payment_status: cap.status || r.data.status || "UNKNOWN", capture_id: cap.id || "" };
+    // Buyer's country (PayPal account or shipping address): the plan only shows US-only phone lines to US buyers.
+    const country = r.data.payer?.address?.country_code || r.data.purchase_units?.[0]?.shipping?.address?.country_code || "";
+    if (r.ok) return { payment_status: cap.status || r.data.status || "UNKNOWN", capture_id: cap.id || "", payer_country: country };
   } catch (e) {}
   return { payment_status: "UNKNOWN", capture_id: "" };
 }
