@@ -530,6 +530,8 @@ footer .brand { color: #fff; }
   .cta-in .btn .tag, .sheet-cta .tag { display: none; }
   .btn { font-size: 1rem; }
 }
+.pill-top { padding: 7px 16px; }
+@media (max-width: 640px) { .pill-top { display: none; } .hero { padding-top: 22px; } }
 </style>
 
 <!-- ===== Reusable dog faces (colors come from CSS variables on each <svg>) ===== -->
@@ -588,7 +590,7 @@ footer .brand { color: #fff; }
   <section class="hero">
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <span class="pill-top"><span class="mini">ROUTINES MADE SIMPLE</span><span class="rest">90-day training + feeding plan</span></span>
+        <span class="pill-top"><span class="rest">90-day training + feeding plan</span></span>
         <h1>The routine your dog needs, written for <span class="rotator" aria-live="polite"><span class="rot-text">your Golden</span><span class="caret" aria-hidden="true"></span></span></h1>
         <p class="lede">Calmer walks, polite greetings and the right amount of food. Tell us your dog's breed, age, weight, home and schedule, and get a step-by-step plan built around them.</p>
         <form class="namebox" id="heroForm">
