@@ -1175,7 +1175,7 @@ const CONFIG = {
   }
   $$(".switch button").forEach(b => b.addEventListener("click", () => setCmp(b.dataset.cmp)));
   setCmp("yours");
-  addEventListener("resize", () => setCmp(card.classList.contains("yours") ? "yours" : "generic"));
+  addEventListener("resize", () => { const b = $('.switch button[aria-pressed="true"]'); if (b) { knob.style.left = b.offsetLeft + "px"; knob.style.width = b.offsetWidth + "px"; } });
 
   /* ---------- Sample book ---------- */
   const pages = $$("#bookView .book-page"), tabs = $$("#bookTabs button"), prog = $("#bookProg");
