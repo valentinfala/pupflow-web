@@ -24,7 +24,7 @@ export default async req => {
     const out = [];
     for (const b of blobs) {
       const r = await store().get(b.key, { type: "json" });
-      if (r && ["received", "dispatch_failed", "send_failed"].includes(r.status)) out.push({ order: r.order_id, status: r.status, received_at: r.received_at });
+      if (r && ["received", "dispatch_failed", "send_failed", "ai_failed"].includes(r.status)) out.push({ order: r.order_id, status: r.status, received_at: r.received_at });
     }
     return json(200, { pending: out });
   }
