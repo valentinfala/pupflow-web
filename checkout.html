@@ -29,6 +29,7 @@ ul{padding-left:20px;margin:10px 0 0;color:var(--ink)}li{margin:4px 0}
 .pp-box{min-height:120px}
 .msg{display:none;margin-top:14px;padding:12px 14px;border-radius:12px;font-size:15px}
 .msg.on{display:block}.msg.err{background:#fde8e8;color:#8a1c1c}.msg.ok{background:#e6f6ec;color:#1d5b33}
+.promo{display:inline-block;background:#F28C38;color:#fff;font-weight:800;font-size:13px;padding:6px 12px;border-radius:999px;margin-bottom:8px}.promo[hidden]{display:none}
 .safe{display:flex;gap:8px;align-items:center;justify-content:center;color:var(--soft);font-size:14px;margin-top:12px}
 .rf{color:var(--soft);font-size:13px;text-align:center;margin:10px 0 0}
 .rf a,.back{color:var(--teal)}
@@ -46,6 +47,7 @@ ul{padding-left:20px;margin:10px 0 0;color:var(--ink)}li{margin:4px 0}
     <h1 data-t="h1"></h1>
     <p class="lead" data-t="lead"></p>
     <div class="card sum">
+      <div class="promo" id="promo" hidden></div>
       <div class="row"><span data-t="item"></span><span id="price1"></span></div>
       <div class="row"><span data-t="planlang"></span><span id="pl"></span></div>
       <div class="row"><span data-t="total"></span><span id="price2"></span></div>
@@ -64,7 +66,7 @@ ul{padding-left:20px;margin:10px 0 0;color:var(--ink)}li{margin:4px 0}
 <script>
 const T = {
   en: { h1: "One step left: your payment", lead: "Pay once with PayPal or card. Right after, you answer 15 quick questions about your dog and your plan arrives by email.",
-        item: "PupFlow 90-day plan", planlang: "Plan language", total: "Total", langName: { en: "English", es: "Spanish" },
+        item: "PupFlow 90-day plan", promo: "🚀 Launch promo", planlang: "Plan language", total: "Total", langName: { en: "English", es: "Spanish" },
         b1: "Personalized PDF built from your answers", b2: "Feeding, daily routine and 2 training programs", b3: "One-time payment. No subscription.",
         pay: "Choose how to pay", safe: "Secure payment processed by PayPal. We never see your card details.",
         rf: "Digital product. All sales final, except as described in our", rfa: "Refund Policy", back: "← Back to PupFlow",
@@ -72,7 +74,7 @@ const T = {
         off: "Checkout is being set up. Please try again soon.", fail: "We couldn't complete the payment. You were not charged. Please try again.",
         notPaid: "PayPal didn't confirm the payment. If you were charged, write to us and we'll fix it right away.", ok: "Payment confirmed! Taking you to the form…" },
   es: { h1: "Último paso: tu pago", lead: "Pagas una sola vez con PayPal o tarjeta. Enseguida respondes 15 preguntas rápidas sobre tu perro y tu plan te llega por email.",
-        item: "Plan PupFlow de 90 días", planlang: "Idioma del plan", total: "Total", langName: { en: "Inglés", es: "Español" },
+        item: "Plan PupFlow de 90 días", promo: "🚀 Promo de lanzamiento", planlang: "Idioma del plan", total: "Total", langName: { en: "Inglés", es: "Español" },
         b1: "PDF personalizado armado con tus respuestas", b2: "Alimentación, rutina diaria y 2 programas de entrenamiento", b3: "Pago único. Sin suscripción.",
         pay: "Elige cómo pagar", safe: "Pago seguro procesado por PayPal. Nunca vemos los datos de tu tarjeta.",
         rf: "Producto digital. Sin reembolsos, salvo los casos de nuestra", rfa: "Política de reembolso", back: "← Volver a PupFlow",
@@ -83,14 +85,18 @@ const T = {
 const q = new URLSearchParams(location.search);
 let lang = q.get("lang") === "es" || q.get("lang") === "en" ? q.get("lang") : (/^es\b/i.test(navigator.language || "") ? "es" : "en");
 const planLang = q.get("plan_lang") === "es" ? "es" : (q.get("plan_lang") === "en" ? "en" : lang);
-let price = "29.00";
+let price = "19.00", listPrice = "29.00";
 const $ = id => document.getElementById(id);
 function msg(kind, text) { const m = $("msg"); m.className = "msg on " + kind; m.textContent = text; }
 function paint() {
   const t = T[lang]; document.documentElement.lang = lang;
   document.querySelectorAll("[data-t]").forEach(e => e.textContent = t[e.dataset.t]);
   $("pl").textContent = t.langName[planLang];
-  $("price1").textContent = $("price2").textContent = "US$" + price.replace(/\.00$/, "");
+  const fmt = v => "US$" + v.replace(/\.00$/, "");
+  const promo = parseFloat(listPrice) > parseFloat(price);
+  $("price1").innerHTML = (promo ? `<s style="opacity:.6;margin-right:6px">${fmt(listPrice)}</s>` : "") + fmt(price);
+  $("price2").textContent = fmt(price);
+  $("promo").hidden = !promo; $("promo").textContent = t.promo;
   $("test").textContent = t.test;
   $("home").href = $("back").href = "index.html?lang=" + lang;
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.l === lang));
@@ -112,7 +118,7 @@ function loadSdk(clientId) {
 (async () => {
   let cfg = {};
   try { cfg = await (await fetch("/.netlify/functions/config")).json(); } catch (e) {}
-  if (cfg.price) { price = cfg.price; paint(); }
+  if (cfg.price) { price = cfg.price; if (cfg.listPrice) listPrice = cfg.listPrice; paint(); }
   if (cfg.env !== "live") $("test").classList.add("on");
   if (!cfg.clientId) { $("pp").textContent = ""; msg("err", T[lang].off); return; }
   try { await loadSdk(cfg.clientId); } catch (e) { $("pp").textContent = ""; msg("err", T[lang].off); return; }

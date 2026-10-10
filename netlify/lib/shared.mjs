@@ -5,10 +5,12 @@
 //   PAYPAL_CLIENT_SECRET  same place. Never put it in the code.
 //   ORDER_SECRET          any long random text; signs the purchase code the form receives
 //   MAKE_WEBHOOK_URL      where finished forms are sent (Make/Zapier). Optional while testing.
-//   PRICE_USD             optional, defaults to "29.00"
+//   PRICE_USD             optional, defaults to "19.00" (launch promo; regular price 29.00)
+//   LIST_PRICE_USD        optional, the regular price shown crossed out during the promo, defaults to "29.00"
 import crypto from "node:crypto";
 
-export const PRICE = () => process.env.PRICE_USD || "29.00";
+export const PRICE = () => process.env.PRICE_USD || "19.00";
+export const LIST_PRICE = () => process.env.LIST_PRICE_USD || "29.00";
 export const API = () => (process.env.PAYPAL_ENV === "live" ? "https://api-m.paypal.com" : "https://api-m.sandbox.paypal.com");
 
 export function json(status, body) {
