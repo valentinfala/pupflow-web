@@ -1105,8 +1105,8 @@ const CONFIG = {
     }).join("");
     storyDots.innerHTML = STORIES.map((_, i) => `<i${i ? "" : ' class="on"'}></i>`).join("");
     $("#storiesNote").textContent = es()
-      ? "Fotos de perros reales, con permiso de sus dueños. Nombres y algunos detalles cambiados por privacidad."
-      : "Photos of real dogs, shared with their owners' permission. Names and some details changed for privacy.";
+      ? "Las calorías, los minutos y las metas son los que PupFlow calcula para cada perro; cada uno avanza a su ritmo."
+      : "Calories, minutes and goals are the ones PupFlow calculates for each dog; every dog learns at its own pace.";
   }
   storyWrap.addEventListener("scroll", () => {
     const cards = storyWrap.children; if (!cards.length) return;
