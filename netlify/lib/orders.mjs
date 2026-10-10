@@ -50,3 +50,18 @@ export function engineAuth(req) {
   const k = req.headers.get("x-engine-key") || "", s = process.env.ENGINE_SECRET || "";
   return s.length >= 16 && k.length === s.length && crypto.timingSafeEqual(Buffer.from(k), Buffer.from(s));
 }
+
+// Website cards of customers who allowed it (form checkbox "showcase"). Separate store, so the public
+// stories function never reads order records. Keys: story/ID (card + state), photo/ID (JPEG bytes, only once published).
+export const showcase = () => getStore({ name: "showcase", consistency: "strong" });
+export async function getStory(order) {
+  return await showcase().get("story/" + order, { type: "json" });
+}
+export async function saveStory(order, patch) {
+  const cur = (await getStory(order)) || {};
+  const next = { ...cur, ...patch, updated_at: new Date().toISOString() };
+  await showcase().setJSON("story/" + order, next);
+  return next;
+}
+export const SITE = () => process.env.URL || "https://pupflowplan.netlify.app";
+export const actionLink = (order, a) => `${SITE()}/.netlify/functions/approve?order=${order}&a=${a}&s=${linkSig(order, a)}`;

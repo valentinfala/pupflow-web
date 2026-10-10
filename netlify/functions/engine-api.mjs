@@ -5,9 +5,9 @@
 //   PUT  ?op=pdf&order=ID      store the finished PDF (raw bytes)
 //   GET  ?op=pdf&order=ID      read it back
 //   GET  ?op=links&order=ID    signed links for the review email
+//   POST ?op=story&order=ID    save the website card {card} of a customer who allowed it; returns the publish links
 import { json } from "../lib/shared.mjs";
-import { store, getOrder, saveOrder, paymentStatus, linkSig, engineAuth } from "../lib/orders.mjs";
-const SITE = () => process.env.URL || "https://pupflowplan.netlify.app";
+import { store, getOrder, saveOrder, paymentStatus, engineAuth, getStory, saveStory, actionLink } from "../lib/orders.mjs";
 export default async req => {
   if (!engineAuth(req)) return json(401, { error: "auth" });
   const u = new URL(req.url), op = u.searchParams.get("op"), order = u.searchParams.get("order") || "";
@@ -44,8 +44,17 @@ export default async req => {
     return new Response(buf, { headers: { "content-type": "application/pdf", "cache-control": "no-store" } });
   }
   if (op === "links") {
-    const mk = a => `${SITE()}/.netlify/functions/approve?order=${order}&a=${a}&s=${linkSig(order, a)}`;
-    return json(200, { send: mk("send"), regenerate: mk("regenerate") });
+    return json(200, { send: actionLink(order, "send"), regenerate: actionLink(order, "regenerate") });
+  }
+  if (op === "story" && req.method === "POST") {
+    const body = await req.json().catch(() => ({}));
+    const rec = await getOrder(order);
+    if (!rec || !body.card || !rec.showcase?.ok) return json(400, { error: "no_consent_or_card" });
+    const prev = await getStory(order);
+    // A rebuilt plan updates the card but keeps it published if it already was.
+    const st = await saveStory(order, { order, card: body.card, consent: rec.showcase, status: prev?.status === "published" ? "published" : "pending",
+                                        created_at: prev?.created_at || new Date().toISOString() });
+    return json(200, { status: st.status, publish: actionLink(order, "publish"), unpublish: actionLink(order, "unpublish") });
   }
   return json(400, { error: "op" });
 };

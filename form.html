@@ -84,6 +84,9 @@ input:focus,textarea:focus{border-color:var(--teal)}
 .unit button[aria-pressed="true"]{background:var(--teal);color:var(--white)}
 .check{display:flex;gap:10px;align-items:flex-start;font-size:15px;cursor:pointer}
 .check input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--teal);flex:none}
+.showcase{margin-top:20px;padding:16px 18px;border-radius:16px;background:#EEF6F6;border:1.5px solid #cfe3e4;display:grid;gap:10px;text-align:left}
+.showcase b{font-size:16px;color:#154E55}
+.showcase .check{font-size:14px;line-height:1.45;color:#22313F}
 
 .search{position:relative}
 .sugg{list-style:none;margin:6px 0 0;padding:6px;border:2px solid var(--line);border-radius:var(--r);max-height:260px;overflow:auto;background:var(--white)}
@@ -229,7 +232,7 @@ const T = {
   consent:"I understand this plan is general guidance and does not replace advice from a veterinarian.",
   nameReq:"Please enter your first name.", emailReq:"Please enter a valid email.", consentReq:"Please tick the box to continue.",
   // review
-  rvT:"Check {name}'s answers", rvL:"Make sure everything is right before we create the plan. Tap “Edit” to change any answer.", rvGo:"Create my plan", edit:"Edit", backRv:"Save and go back to the summary", toReview:"Review my answers",
+  rvT:"Check {name}'s answers", rvL:"Make sure everything is right before we create the plan. Tap “Edit” to change any answer.", rvGo:"Create my plan", scT:"Show {name} on our website? (optional)", scTxt:"I allow PupFlow to show {name}'s photo and plan (name, age, breed, weight, the 2 problems and the 90-day goals) on the PupFlow website. My name and email are never shown. I can ask to have it removed at any time by writing to pupflowhelp@icloud.com.", scSum:"Shown on the website", edit:"Edit", backRv:"Save and go back to the summary", toReview:"Review my answers",
   // done
   doneT:"{name}'s plan is on its way", doneL:"We're creating {name}'s personalized plan now. This can take a few minutes. We'll email it to you as soon as it's ready (always within 24 hours). If you don't see it, check your spam folder.", noBuyT:"First, get your plan", noBuyL:"This form opens after checkout. If you already paid, open the link from your payment confirmation or write to us.", noBuyB:"Go to PupFlow",
   savedOk:"Answers received. Creating your plan…", savedNo:"We couldn't send your answers. Check your connection and tap the button to try again.",
@@ -276,7 +279,7 @@ const T = {
   q15:"Último paso: ¿a dónde te mandamos el plan?", ownerName:"Tu nombre", email:"Email", emailP:"tu@email.com",
   consent:"Entiendo que este plan es una guía general y no reemplaza el consejo de un veterinario.",
   nameReq:"Escribe tu nombre.", emailReq:"Escribe un email válido.", consentReq:"Marca la casilla para seguir.",
-  rvT:"Revisa las respuestas de {name}", rvL:"Fíjate que todo esté bien antes de crear el plan. Toca “Editar” para cambiar cualquier respuesta.", rvGo:"Crear mi plan", edit:"Editar", backRv:"Guardar y volver al resumen", toReview:"Revisar mis respuestas",
+  rvT:"Revisa las respuestas de {name}", rvL:"Fíjate que todo esté bien antes de crear el plan. Toca “Editar” para cambiar cualquier respuesta.", rvGo:"Crear mi plan", scT:"¿Mostramos a {name} en nuestra web? (opcional)", scTxt:"Autorizo a PupFlow a mostrar la foto y el plan de {name} (nombre, edad, raza, peso, los 2 problemas y las metas a 90 días) en la web de PupFlow. Nunca se muestran mi nombre ni mi email. Puedo pedir que lo quiten cuando quiera escribiendo a pupflowhelp@icloud.com.", scSum:"Se muestra en la web", edit:"Editar", backRv:"Guardar y volver al resumen", toReview:"Revisar mis respuestas",
   doneT:"El plan de {name} está en camino", doneL:"Estamos creando el plan personalizado de {name}. Esto puede tardar unos minutos. Te lo mandamos por email apenas esté listo (siempre dentro de las 24 horas). Si no lo ves, revisa la carpeta de spam.", noBuyT:"Primero consigue tu plan", noBuyL:"Este formulario se abre después del pago. Si ya pagaste, abre el link de tu confirmación de pago o escríbenos.", noBuyB:"Ir a PupFlow",
   savedOk:"Respuestas recibidas. Creando tu plan…", savedNo:"No pudimos enviar tus respuestas. Revisa tu conexión y toca el botón para intentar de nuevo.",
   copy:"Copiar respuestas", copied:"Copiado", again:"Cargar otro perro", summary:"Tus respuestas", creating:"Creando tu plan… esto puede tardar unos minutos",
@@ -285,7 +288,7 @@ const T = {
 };
 
 /* ---------- state ---------- */
-const blank = () => ({photo:"",photo_social:false,dog_name:"",sex:"",neutered:"",pregnant_or_nursing:"",breed:"",breed_slug:"",age_years:"",age_months:"",
+const blank = () => ({photo:"",photo_social:false,showcase:false,dog_name:"",sex:"",neutered:"",pregnant_or_nursing:"",breed:"",breed_slug:"",age_years:"",age_months:"",
   weight:"",weight_unit:"",weight_unknown:false,body_condition:"",food:[],kcal:"",kcal_unit:"",kcal_unknown:false,allergies:[],allergies_other:"",food_other:"",housing_other:"",household_other:"",known_cues_other:"",notes:"",
   activity:"",housing:"",household:[],time_per_day_min:"",problems:[],problems_other:"",known_cues:[],vet_condition:"",vet_condition_detail:"",
   bite_history:"",owner_first_name:"",email:(PURCHASE&&PURCHASE.email)||"",consent:false});
@@ -365,7 +368,7 @@ function photoBox(){
   const box=el("div",{class:"photo"+(has?" has":"")}, ph,
     el("div",{class:"txt"}, el("b",{},t("phT")), el("small",{}, has?t("phPriv"):t("phH")),
       el("div",{class:"acts"}, el("label",{class:"pick",for:"photo"}, has?t("phChange"):t("phPick")),
-        has? el("button",{type:"button",class:"rm",onclick:()=>{A.photo="";A.photo_social=false;render(true);}},t("phRm")) : null)),
+        has? el("button",{type:"button",class:"rm",onclick:()=>{A.photo="";A.photo_social=false;A.showcase=false;render(true);}},t("phRm")) : null)),
     inp);
   const out=[box];
   if(has) out.push(el("label",{class:"check"}, el("input",{type:"checkbox",id:"photo_social",checked:A.photo_social,onchange:e=>{A.photo_social=e.target.checked;}}), t("phSocial")));
@@ -531,7 +534,9 @@ const STEPS = [
  {id:"review", review:true, view(){
    const dl=el("dl",{class:"summary"}, ...rows().filter(r=>r[2]).map(([k,v,id])=>el("div",{class:"rv"},el("dt",{},k),el("dd",{},v||"—"),
      el("button",{type:"button",class:"edit",onclick:()=>{ fromReview=true; step=STEPS.findIndex(x=>x.id===id); enter(); }},t("edit")))));
-   return [el("h2",{},t("rvT")), el("p",{class:"lead"},t("rvL")), dl]; }},
+   const sc = A.photo ? el("div",{class:"showcase"}, el("b",{},t("scT")),
+     el("label",{class:"check"}, el("input",{type:"checkbox",id:"showcase",checked:A.showcase,onchange:e=>{A.showcase=e.target.checked;}}), t("scTxt"))) : null;
+   return [el("h2",{},t("rvT")), el("p",{class:"lead"},t("rvL")), dl, sc]; }},
  {id:"done", done:true, view: doneView},
 ];
 const QCOUNT = STEPS.filter(s=>!s.intro&&!s.done&&!s.review).length;
@@ -562,6 +567,8 @@ function payload(){
     vet_condition_detail: A.vet_condition_detail.trim()||null,
     notes: A.notes.trim()||null,
     consent: A.consent,
+    // Opt-in to appear as a case on the website (only with a photo). Text and time are kept as proof.
+    showcase: (A.photo && A.showcase) ? { ok: true, text: t("scTxt"), at: new Date().toISOString() } : null,
   };
 }
 let lastPayload=null;
@@ -571,7 +578,7 @@ function rows(){
   const list=(arr,map)=>arr.map(v=>t(map?map(v):v)).join(", ");
   return [
     [t("q1"), A.dog_name, "name"],
-    [t("phSum"), A.photo?("✓"+(A.photo_social?" · "+(lang==="es"?"se puede compartir":"OK to share"):"")):"—", "name"],
+    [t("phSum"), A.photo?("✓"+(A.photo_social?" · "+(lang==="es"?"se puede compartir":"OK to share"):"")+(A.showcase?" · "+t("scSum"):"")):"—", "name"],
     [t("q2"), `${L(A.sex)} · ${L(A.neutered)}${A.pregnant_or_nursing?` · ${t("q2c")} ${L(A.pregnant_or_nursing)}`:""}`, "sex"],
     [t("q3"), A.breed==="mixed"?L("mixed"):A.breed==="unknown"?L("unknown"):A.breed, "breed"],
     [t("q4"), ages.join(" "), "age"],
