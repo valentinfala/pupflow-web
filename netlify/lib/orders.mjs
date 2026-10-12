@@ -19,6 +19,14 @@ export async function saveOrder(order, patch) {
   return next;
 }
 
+// Paid 3rd-program add-on of a plan order (key addon/ORDER), written by capture-addon.
+export async function getAddon(order) {
+  return await store().get("addon/" + order, { type: "json" });
+}
+export async function saveAddon(order, rec) {
+  await store().setJSON("addon/" + order, { ...rec, updated_at: new Date().toISOString() });
+}
+
 export async function paymentStatus(order) {
   try {
     const r = await paypal(`/v2/checkout/orders/${encodeURIComponent(order)}`, { method: "GET" });
