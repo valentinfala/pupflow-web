@@ -71,5 +71,5 @@ export async function saveStory(order, patch) {
   await showcase().setJSON("story/" + order, next);
   return next;
 }
-export const SITE = () => process.env.URL || "https://pupflowplan.netlify.app";
+export const SITE = () => process.env.URL || "https://pupflowplan.com";
 export const actionLink = (order, a) => `${SITE()}/.netlify/functions/approve?order=${order}&a=${a}&s=${linkSig(order, a)}`;
