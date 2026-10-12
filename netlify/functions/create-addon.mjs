@@ -16,7 +16,7 @@ export default async req => {
         intent: "CAPTURE",
         purchase_units: [{
           amount: { currency_code: "USD", value: ADDON_PRICE() },
-          description: pl === "es" ? "PupFlow: 3.er programa de entrenamiento" : "PupFlow: 3rd training program",
+          description: pl === "es" ? "PupFlow: 3.er problema" : "PupFlow: 3rd problem",
           custom_id: ADDON_TAG(order),
         }],
         application_context: { brand_name: "PupFlow", shipping_preference: "NO_SHIPPING", user_action: "PAY_NOW" },
