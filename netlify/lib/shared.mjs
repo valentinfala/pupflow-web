@@ -7,10 +7,12 @@
 //   MAKE_WEBHOOK_URL      where finished forms are sent (Make/Zapier). Optional while testing.
 //   PRICE_USD             optional, defaults to "19.00" (launch promo; regular price 29.00)
 //   LIST_PRICE_USD        optional, the regular price shown crossed out during the promo, defaults to "29.00"
+//   ADDON_PRICE_USD       optional, price of the 3rd training program sold inside the form, defaults to "9.00"
 import crypto from "node:crypto";
 
 export const PRICE = () => process.env.PRICE_USD || "19.00";
 export const LIST_PRICE = () => process.env.LIST_PRICE_USD || "29.00";
+export const ADDON_PRICE = () => process.env.ADDON_PRICE_USD || "9.00";
 export const API = () => (process.env.PAYPAL_ENV === "live" ? "https://api-m.paypal.com" : "https://api-m.sandbox.paypal.com");
 
 export function json(status, body) {
@@ -51,3 +53,12 @@ export function verify(order, planLang, token) {
   return token.length === good.length && crypto.timingSafeEqual(Buffer.from(token), Buffer.from(good));
 }
 export const LANG = l => (l === "es" ? "es" : "en");
+
+// The 3rd-program add-on is its own PayPal order, tied to the plan order it belongs to.
+export const ADDON_TAG = order => "addon3:" + order;
+
+// A capture counts as paid when COMPLETED, or PENDING only because the seller account must accept the currency.
+export function captureOk(cap) {
+  const reason = (cap.status_details || {}).reason || "";
+  return cap.status === "COMPLETED" || (cap.status === "PENDING" && reason === "RECEIVING_PREFERENCE_MANDATES_MANUAL_ACTION");
+}

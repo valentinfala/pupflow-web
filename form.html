@@ -153,6 +153,44 @@ input:focus,textarea:focus{border-color:var(--teal)}
 .saved.ok{background:var(--mint);color:var(--teal-deep)}
 .saved.no{background:var(--cream);color:var(--ink)}
 pre.raw{white-space:pre-wrap;word-break:break-word;background:var(--mint);border-radius:10px;padding:12px;font-size:12px;max-height:220px;overflow:auto;text-align:left}
+
+/* 3rd program upsell: gold, premium */
+.gold-teaser{display:flex;align-items:center;gap:12px;width:100%;margin-top:16px;padding:14px 16px;border:0;border-radius:16px;cursor:pointer;text-align:left;
+  font:600 15px/1.3 var(--font-body);color:#4a3405;background:linear-gradient(120deg,#FFF3C8,#F6D57A 45%,#FFF0B8 60%,#E9B949);background-size:220% 100%;
+  box-shadow:0 0 0 1.5px #D9A92E inset,0 8px 22px rgba(201,150,43,.28);animation:goldShine 3.2s linear infinite}
+.gold-teaser b{font-family:var(--font-display);font-weight:800}
+.gold-teaser .gt-ic{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#154E55;color:#F6D57A;font-size:20px}
+.gold-teaser .gt-pr{margin-left:auto;font:800 20px var(--font-display);color:#154E55;white-space:nowrap}
+.opt.locked{position:relative}
+.opt.locked .lock{margin-left:auto;flex:none;font-size:13px;padding:3px 8px;border-radius:999px;background:linear-gradient(135deg,#FFF0B8,#E3B64A);box-shadow:0 0 0 1px #D9A92E inset}
+.gold-ok{display:flex;align-items:center;gap:10px;margin-top:16px;padding:12px 14px;border-radius:14px;background:#154E55;color:#FFF3C8;font-weight:700;font-size:15px;box-shadow:0 0 0 1.5px #E3B64A inset}
+.gold-ok span{color:#F6D57A;font-size:18px}
+@keyframes goldShine{from{background-position:0 0}to{background-position:-220% 0}}
+.up-bg{position:fixed;inset:0;z-index:50;background:rgba(10,30,34,.62);display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto;animation:upFade .25s ease both}
+.up{position:relative;width:100%;max-width:440px;margin:auto;border-radius:24px;padding:3px;background:linear-gradient(135deg,#FFF0B8,#D9A92E 30%,#FBE6A4 55%,#B8871F 80%,#F6D57A);background-size:200% 200%;animation:upIn .35s cubic-bezier(.2,.9,.3,1.2) both,goldShine 4s linear infinite;box-shadow:0 30px 70px rgba(0,0,0,.35)}
+.up-in{border-radius:21px;background:radial-gradient(120% 80% at 50% 0%,#1F6F78 0%,#154E55 55%,#0E3A40 100%);color:#fff;padding:26px 22px 20px;text-align:center;overflow:hidden;position:relative}
+.up-in::before{content:"";position:absolute;inset:-40% -60%;background:linear-gradient(105deg,transparent 42%,rgba(255,236,170,.16) 50%,transparent 58%);animation:upSweep 3.4s ease-in-out infinite;pointer-events:none}
+.up-x{position:absolute;top:10px;right:12px;border:0;background:transparent;color:#cfe3e4;font-size:26px;line-height:1;cursor:pointer;padding:6px;z-index:1}
+.up-badge{display:inline-flex;align-items:center;gap:6px;font:800 12px var(--font-body);letter-spacing:.14em;text-transform:uppercase;color:#3b2a04;background:linear-gradient(90deg,#F6D57A,#FFF0B8,#E3B64A);padding:6px 12px;border-radius:999px}
+.up-crown{font-size:44px;line-height:1;margin:14px 0 4px;filter:drop-shadow(0 6px 14px rgba(246,213,122,.45))}
+.up h2{color:#fff;font-size:28px;font-weight:800;margin-top:4px}
+.up h2 em{font-style:normal;background:linear-gradient(90deg,#FFE9A3,#F2C14E,#FFF3C8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.up p.up-l{color:#d6e9ea;margin:10px auto 0;max-width:34ch;font-size:15.5px}
+.up p.up-l b{color:#FFE9A3}
+.up ul{list-style:none;padding:0;margin:16px 0 0;text-align:left;display:grid;gap:9px}
+.up li{display:flex;gap:10px;font-size:15px;color:#eef6f6}
+.up li::before{content:"✓";flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:13px;color:#3b2a04;background:linear-gradient(135deg,#FFF0B8,#E3B64A)}
+.up-price{margin-top:18px;display:flex;align-items:baseline;justify-content:center;gap:10px}
+.up-price b{font:800 46px/1 var(--font-display);background:linear-gradient(180deg,#FFF3C8,#F2C14E 60%,#C9962B);-webkit-background-clip:text;background-clip:text;color:transparent}
+.up-price span{color:#cfe3e4;font-size:14px;font-weight:600}
+.up-pp{margin-top:14px;background:#fff;border-radius:16px;padding:12px 12px 2px;min-height:60px;position:relative;z-index:1}
+.up-msg{margin-top:10px;font-size:14px;font-weight:600;min-height:0}
+.up-msg.err{color:#FFB4A8}.up-msg.ok{color:#FFE9A3}
+.up-no{margin-top:12px;border:0;background:transparent;color:#a9c9cb;font:600 14px var(--font-body);text-decoration:underline;cursor:pointer;padding:6px;position:relative;z-index:1}
+@keyframes upFade{from{opacity:0}to{opacity:1}}
+@keyframes upIn{from{opacity:0;transform:translateY(24px) scale(.94)}to{opacity:1;transform:none}}
+@keyframes upSweep{0%,30%{transform:translateX(-60%)}70%,100%{transform:translateX(60%)}}
+@media (prefers-reduced-motion:reduce){.gold-teaser,.up,.up-in::before,.up-bg{animation:none}}
 </style>
 
 <div class="wrap">
@@ -229,7 +267,7 @@ const T = {
   // 10
   q10:"How much time can you spend training each day?", q10h:"Be realistic. A plan you can keep beats a perfect one.", min:"{m} minutes", min60:"60 minutes or more",
   // 11
-  q11:"What would you like to improve?", q11h:"Pick up to 2. These become the training programs in the plan.", max2:"You can pick up to 2. Unselect one first.",
+  q11:"What would you like to improve?", q11h:"Pick up to 2. These become the training programs in the plan.", max2:"You can pick up to 2. Unselect one first.", q11h3:"Pick up to 3. These become the training programs in the plan.",
   leash_pulling:"Pulls on the leash", jumping:"Jumps on guests", barking:"Barks too much", separation:"Struggles when left alone", mouthing:"Nips or mouths", house_training:"Potty accidents at home", chewing:"Chews or destroys things", recall:"Doesn't come when called", dog_reactivity:"Reacts to other dogs", basic_obedience:"Basic obedience",
   other:"Something else", q11o:"Tell us what (optional)",
   // 12
@@ -281,7 +319,7 @@ const T = {
   q9:"¿Dónde viven?", apartment:"Departamento", house_yard:"Casa con patio", house_no_yard:"Casa sin patio", rural:"Campo o zona rural",
   q9b:"¿Quién más vive con {name}?", q9bh:"Elige todas las que correspondan.", adults:"Adultos", kids:"Niños menores de 12", dogs:"Otros perros", cats:"Gatos", multiH:"Elige todas las que correspondan.",
   q10:"¿Cuánto tiempo por día puedes dedicarle al entrenamiento?", q10h:"Sé realista: un plan que puedes cumplir sirve más que uno perfecto.", min:"{m} minutos", min60:"60 minutos o más",
-  q11:"¿Qué te gustaría mejorar?", q11h:"Elige hasta 2. Serán los programas de entrenamiento del plan.", max2:"Puedes elegir hasta 2. Primero quita una.",
+  q11:"¿Qué te gustaría mejorar?", q11h:"Elige hasta 2. Serán los programas de entrenamiento del plan.", max2:"Puedes elegir hasta 2. Primero quita una.", q11h3:"Elige hasta 3. Serán los programas de entrenamiento del plan.",
   leash_pulling:"Tira de la correa", jumping:"Salta encima de las visitas", barking:"Ladra demasiado", separation:"Sufre cuando se queda sol{o_a}", mouthing:"Muerde o mordisquea", house_training:"Hace sus necesidades en casa", chewing:"Rompe o mastica cosas", recall:"No viene cuando l{o_a} llamo", dog_reactivity:"Reacciona a otros perros", basic_obedience:"Obediencia básica",
   other:"Otra cosa", q11o:"Cuéntanos qué (opcional)",
   q12:"¿Qué órdenes ya sabe {name}?", q12h:"Elige todas las que correspondan.", c_name:"Responde a su nombre", sit:"Sentado", down:"Echado", wait:"Espera / quieto", leave_it:"Déjalo", come:"Ven", c_none:"Ninguna todavía",
@@ -305,6 +343,99 @@ const blank = () => ({photo:"",photo_social:false,showcase:false,dog_name:"",sex
   activity:"",housing:"",household:[],time_per_day_min:"",problems:[],problems_other:"",known_cues:[],vet_condition:"",vet_condition_detail:"",
   bite_history:"",owner_first_name:"",email:(PURCHASE&&PURCHASE.email)||"",consent:false});
 let A = blank();
+// 3rd paid program: inert here; the website build (build_site.py) replaces it with the real offer.
+
+// 3rd program for US$9 (website only). Paid state lives on the server; localStorage only remembers it on this device.
+const ADDON_T = {
+  en: { badge:"Premium add-on", h:"Unlock a <em>3rd program</em>", l:"Add <b>{p}</b> as a full 3rd training program in {name}'s plan.", l0:"Add a full 3rd training program to {name}'s plan.",
+        b1:"A complete step-by-step program, just like the other 2", b2:"Built into {name}'s daily routine and 90-day roadmap", b3:"Personalized for {name}, same as the rest of the plan",
+        once:"one-time · added to this plan", no:"No thanks, keep 2 programs", wait:"Confirming your payment…", fail:"We couldn't complete the payment. You were not charged. Please try again.",
+        off:"The add-on isn't available right now. You can continue with 2 programs.", tz:"Want a 3rd program? <b>Unlock it</b>", ok:"3rd program unlocked. Pick up to 3." },
+  es: { badge:"Extra premium", h:"Desbloquea un <em>3.er programa</em>", l:"Suma <b>{p}</b> como 3.er programa completo en el plan de {name}.", l0:"Suma un 3.er programa de entrenamiento completo al plan de {name}.",
+        b1:"Un programa completo paso a paso, igual que los otros 2", b2:"Integrado en la rutina diaria de {name} y en la hoja de ruta de 90 días", b3:"Personalizado para {name}, como el resto del plan",
+        once:"pago único · se suma a este plan", no:"No, gracias, sigo con 2 programas", wait:"Confirmando tu pago…", fail:"No pudimos completar el pago. No se te cobró nada. Inténtalo de nuevo.",
+        off:"El extra no está disponible ahora. Puedes seguir con 2 programas.", tz:"¿Quieres un 3.er programa? <b>Desbloquéalo</b>", ok:"3.er programa desbloqueado. Elige hasta 3." }
+};
+const ADDON = { paid:false, price:"9", cfg:null };
+const at = k => ADDON_T[lang][k].replace(/\{name\}/g, (A.dog_name||"").trim() || (lang==="es"?"tu perro":"your dog"));
+const addonKey = () => "pf-addon-" + (PURCHASE && PURCHASE.order);
+try { if (PURCHASE && localStorage.getItem(addonKey())) ADDON.paid = true; } catch (e) {}
+const priceTxt = () => "$" + (Number(ADDON.price) % 1 ? Number(ADDON.price).toFixed(2) : String(Number(ADDON.price)));
+async function addonCfg(){
+  if (!ADDON.cfg) { try { ADDON.cfg = await (await fetch("/.netlify/functions/config")).json(); } catch (e) { ADDON.cfg = {}; } if (ADDON.cfg.addonPrice) ADDON.price = ADDON.cfg.addonPrice; }
+  return ADDON.cfg;
+}
+if (PURCHASE) addonCfg().then(() => { if (STEPS[step] && STEPS[step].id === "problems") render(true); });
+function addonSdk(clientId){
+  if (window.paypal) return Promise.resolve();
+  return new Promise((ok, bad) => { const s = document.createElement("script");
+    s.src = "https://www.paypal.com/sdk/js?client-id=" + encodeURIComponent(clientId) + "&currency=USD&intent=capture&locale=" + (lang === "es" ? "es_US" : "en_US");
+    s.onload = ok; s.onerror = bad; document.head.appendChild(s); });
+}
+async function addonPost(fn, body){
+  const r = await fetch("/.netlify/functions/" + fn, { method:"POST", headers:{ "content-type":"application/json" }, body: JSON.stringify(body) });
+  const d = await r.json().catch(() => ({})); d._status = r.status; return d;
+}
+function addonUnlocked(val, d){
+  ADDON.paid = true;
+  try { localStorage.setItem(addonKey(), JSON.stringify({ order: d.addon_order, token: d.addon_token })); } catch (e) {}
+  if (val && !A.problems.includes(val) && A.problems.filter(v => v !== "other").length < 3) A.problems = A.problems.concat(val);
+  const bg = document.getElementById("upbg"); if (bg) bg.remove();
+  document.body.style.overflow = "";
+  render(true);
+}
+function addonClose(){ const bg = document.getElementById("upbg"); if (bg) bg.remove(); document.body.style.overflow = ""; }
+async function addonOffer(val){
+  if (!PURCHASE || ADDON.paid) return;
+  addonClose();
+  const msg = el("p",{class:"up-msg",role:"status"});
+  const pp = el("div",{class:"up-pp",id:"uppp"});
+  const lead = el("p",{class:"up-l"}); lead.innerHTML = val ? at("l").replace("{p}", t(val)) : at("l0");
+  const h = el("h2",{id:"uph"}); h.innerHTML = at("h");
+  const badge = el("span",{class:"up-badge"},"★ " + at("badge"));
+  const price = el("div",{class:"up-price"}, el("b",{id:"upprice"}, priceTxt()), el("span",{}, at("once")));
+  const bg = el("div",{class:"up-bg",id:"upbg",role:"dialog","aria-modal":"true","aria-labelledby":"uph",onclick:e => { if (e.target === bg) addonClose(); }},
+    el("div",{class:"up"}, el("div",{class:"up-in"},
+      el("button",{type:"button",class:"up-x","aria-label":"Close",onclick:addonClose},"×"),
+      badge, el("div",{class:"up-crown","aria-hidden":"true"},"👑"), h, lead,
+      el("ul",{}, el("li",{},at("b1")), el("li",{},at("b2")), el("li",{},at("b3"))),
+      price, pp, msg,
+      el("button",{type:"button",class:"up-no",onclick:addonClose}, at("no")))));
+  document.body.append(bg); document.body.style.overflow = "hidden";
+  const say = (k, cls) => { msg.className = "up-msg " + cls; msg.textContent = at(k); };
+  const cfg = await addonCfg();
+  document.getElementById("upprice") && (document.getElementById("upprice").textContent = priceTxt());
+  if (!cfg.clientId) { pp.remove(); say("off","err"); return; }
+  try { await addonSdk(cfg.clientId); } catch (e) { pp.remove(); say("off","err"); return; }
+  if (!document.getElementById("uppp")) return;
+  const buy = { order: PURCHASE.order, token: PURCHASE.token, plan_lang: PURCHASE.plan_lang };
+  paypal.Buttons({
+    style: { layout:"vertical", shape:"pill", label:"pay", color:"gold" },
+    createOrder: async () => {
+      const d = await addonPost("create-addon", buy);
+      if (d.already) { addonUnlocked(val, d); throw new Error("already paid"); }
+      if (!d.id) { say("fail","err"); throw new Error("create"); }
+      return d.id;
+    },
+    onApprove: async data => {
+      say("wait","ok");
+      let d; try { d = await addonPost("capture-addon", Object.assign({ orderID: data.orderID }, buy)); } catch (e) { d = {}; }
+      if (!d.ok) { say("fail","err"); return; }
+      try { fbq("track", "Purchase", { value: Number(d.value) || 9, currency: "USD", content_name: "PupFlow 3rd training program", content_type: "product" }, { eventID: d.addon_order }); } catch (e) {}
+      addonUnlocked(val, d);
+    },
+    onError: () => { if (!ADDON.paid) say("fail","err"); }
+  }).render("#uppp");
+}
+ADDON.offer = PURCHASE ? addonOffer : null;
+ADDON.extra = () => {
+  if (!PURCHASE) return null;
+  if (ADDON.paid) return el("div",{class:"gold-ok",role:"status"}, el("span",{},"★"), at("ok"));
+  if (A.problems.filter(v => v !== "other").length < 2) return null;
+  const b = el("button",{type:"button",class:"gold-teaser",onclick:() => addonOffer(null)}, el("span",{class:"gt-ic"},"👑"), el("span",{}), el("span",{class:"gt-pr"}, priceTxt()));
+  b.children[1].innerHTML = at("tz");
+  return b;
+};
 let lang = "en";
 if (PURCHASE) lang = PURCHASE.plan_lang; else try{ const s=localStorage.getItem("pf-plan-lang")||localStorage.getItem("pf-lang"); if(s==="es"||s==="en") lang=s; else if((navigator.language||"").toLowerCase().startsWith("es")) lang="es"; }catch(e){ if((navigator.language||"").toLowerCase().startsWith("es")) lang="es"; }
 let step = 0;
@@ -341,15 +472,16 @@ function multi(key, items, opts={}){
   items.forEach(([val,label])=>{
     const on = A[key].includes(val);
     const full = opts.max && !on && A[key].filter(v=>v!=="other").length>=opts.max && val!=="other";
-    const b = el("button",{type:"button",class:"opt multi",role:"checkbox","aria-checked":String(on),"aria-disabled":String(!!full),id:`${key}-${val}`,
+    const lock = full && opts.onFull;  // a paid extra can unlock it: looks tappable, with a lock mark
+    const b = el("button",{type:"button",class:"opt multi"+(lock?" locked":""),role:"checkbox","aria-checked":String(on),"aria-disabled":String(!!full&&!lock),id:`${key}-${val}`,
       onclick:()=>{
-        if(full){ showErr(t("max2")); return; }
+        if(full){ if(opts.onFull) opts.onFull(val); else showErr(t("max2")); return; }
         let arr = A[key].slice();
         if(on) arr = arr.filter(v=>v!==val);
         else if(opts.exclusive && opts.exclusive.includes(val)) arr=[val];
         else { arr = arr.filter(v=>!(opts.exclusive||[]).includes(v)); arr.push(val); }
         A[key]=arr; clearErr(); render();
-      }}, el("span",{class:"mark"}), el("span",{},label));
+      }}, el("span",{class:"mark"}), el("span",{},label), lock?el("span",{class:"lock","aria-hidden":"true"},"🔒"):null);
     g.append(b);
   });
   return g;
@@ -523,7 +655,7 @@ const STEPS = [
   valid(){ return A.time_per_day_min?null:t("req"); }},
  {id:"problems", view(){
    const keys=["leash_pulling","jumping","barking","separation","mouthing","house_training","chewing","recall","dog_reactivity","basic_obedience","other"];
-   const out=[el("h2",{},t("q11")), el("p",{class:"lead"},t("q11h")), el("div",{class:"q"}, multi("problems",keys.map(k=>[k,t(k)]),{max:2}))];
+   const out=[el("h2",{},t("q11")), el("p",{class:"lead"},t(ADDON.paid?"q11h3":"q11h")), el("div",{class:"q"}, multi("problems",keys.map(k=>[k,t(k)]),{max:ADDON.paid?3:2, onFull:ADDON.paid?null:ADDON.offer})), ADDON.extra()];
    if(A.problems.includes("other")) out.push(el("div",{class:"q"}, el("div",{class:"field"},el("label",{for:"problems_other"},t("q11o")), text("problems_other",{html:{maxlength:"120"}}))));
    return out; },
   valid(){ return A.problems.filter(p=>p!=="other").length?null:t("req"); }},
