@@ -633,12 +633,20 @@ s.was { opacity: .72; font-weight: 600; text-decoration-thickness: 2px; margin-r
 .gf-stage.open .gf-spark{animation:gfSpark 1.4s ease .7s 1 forwards}
 .gf-stage.open .gf-spark.s2{animation-delay:.85s}.gf-stage.open .gf-spark.s3{animation-delay:1s}.gf-stage.open .gf-spark.s4{animation-delay:1.1s}
 .gf-stage.open .gf-hint{opacity:0}
+.gf-send:focus-visible{opacity:1;transform:none;pointer-events:auto}
 .gf-stage.open .gf-send{opacity:1;transform:none;pointer-events:auto}
 @keyframes gfFoil{to{transform:translateX(120%)}}
 @keyframes gfSpark{0%{opacity:0;transform:scale(.2) rotate(0)}40%{opacity:1;transform:scale(1.15) rotate(45deg)}100%{opacity:.85;transform:scale(1) rotate(90deg)}}
 @keyframes gfFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 .gf-stage:not(.open) .gf-box{animation:gfFloat 3.6s ease-in-out infinite}
-@media(max-width:600px){.gf-stage{padding-top:175px}.gf-stage.open .gf-card{transform:translate(3%,-86%) rotate(3deg)}.gf-stage.open .gf-lid{transform:translate(-8%,-76%) rotate(-8deg)}.gf-to{font-size:1.35rem}.gf-card-in{padding:12px 13px}}
+@media(max-width:600px){
+  .gf-panel{padding:26px 22px 30px;gap:6px;border-radius:28px}.gf-panel::before{inset:9px;border-radius:21px}
+  .gf-copy{gap:14px}.gf-copy h2{font-size:1.75rem}.gf-lede{font-size:1rem}
+  .gf-list{gap:8px;font-size:.95rem}.gf-copy .gf-cta{display:none}
+  .gf-stage{padding-top:0;margin-top:-18px;gap:12px;transition:padding-top .6s cubic-bezier(.34,1.2,.64,1)}.gf-stage.open{padding-top:150px;margin-top:0}.gf-box{width:min(270px,100%)}.gf-halo{width:300px;height:300px}
+  .gf-to{font-size:1.2rem}.gf-card-in{padding:10px 12px}.gf-what{margin-top:5px;padding-top:5px}
+  .gf-send{opacity:1;transform:none;pointer-events:auto;min-height:54px;width:100%;max-width:320px}
+  .gf-stage.open .gf-card{transform:translate(3%,-86%) rotate(3deg)}.gf-stage.open .gf-lid{transform:translate(-8%,-76%) rotate(-8deg)}}
 @media(prefers-reduced-motion:reduce){.gf-lid,.gf-card,.gf-send,.gf-cta{transition:none}.gf-stage:not(.open) .gf-box,.gf-stage.open .gf-foil,.gf-stage.open .gf-spark{animation:none}.gf-stage.open .gf-spark{opacity:.85}}
 </style>
 
@@ -988,7 +996,7 @@ s.was { opacity: .72; font-weight: 600; text-decoration-thickness: 2px; margin-r
           </button>
           <span class="gf-spark s1" aria-hidden="true"></span><span class="gf-spark s2" aria-hidden="true"></span><span class="gf-spark s3" aria-hidden="true"></span><span class="gf-spark s4" aria-hidden="true"></span>
           <p class="gf-hint" data-gt="hint">Tap to open</p>
-          <a class="gf-cta gf-send" id="gfSend" href="gift.html" data-gift-link tabindex="-1"><span data-gt="send">Send this gift card</span></a>
+          <a class="gf-cta gf-send" id="gfSend" href="gift.html" data-gift-link><span data-gt="send">Send this gift card</span></a>
         </div>
       </div>
     </div>
@@ -1528,7 +1536,6 @@ document.addEventListener("click", e => {
     const open = !stage.classList.contains("open");
     stage.classList.toggle("open", open);
     box.setAttribute("aria-expanded", String(open));
-    send.tabIndex = open ? 0 : -1;
     if (open) { try { fbq("trackCustom", "GiftOpen"); } catch (e) {} setTimeout(() => send.focus({ preventScroll: true }), 900); }
   });
 })();
