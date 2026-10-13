@@ -2,7 +2,9 @@
 
 Landing page de PupFlow (https://pupflowplan.com). Netlify publica esta carpeta tal cual, sin build.
 
-Se genera desde `plan-mascotas/landing/src/make_publish.py` en el proyecto; no editar `index.html` a mano.
+Este repositorio es la versión oficial de la web: los cambios se hacen directo acá y Netlify publica cada push a `main`. (Antes `index.html` se generaba con `plan-mascotas/landing/src/make_publish.py`, pero esa carpeta ya no está disponible: no regenerar la web con ese script, porque pisaría los cambios hechos acá.)
+
+Historial de cambios y estado del proyecto: documento "PupFlow — estado y cambios" en el proyecto PupFlow de Claude.
 
 ## Pago (PayPal)
 
