@@ -578,49 +578,68 @@ s.was { opacity: .72; font-weight: 600; text-decoration-thickness: 2px; margin-r
 }
 /* ===== Gift card section ===== */
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.gf-sec .wrap{background:var(--cream);border-radius:36px;padding:clamp(28px,5vw,64px)}
-.gf-grid{display:grid;gap:36px;align-items:center}
-@media(min-width:900px){.gf-grid{grid-template-columns:1.05fr .95fr}}
-.gf-copy{display:grid;gap:18px;justify-items:start}
-.gf-copy h2{font-size:clamp(1.9rem,3.6vw,2.7rem)}
-.gf-list{list-style:none;margin:4px 0 6px;padding:0;display:grid;gap:10px}
-.gf-list li{position:relative;padding-left:30px;font-weight:600}
-.gf-list li::before{content:"";position:absolute;left:0;top:.35em;width:18px;height:18px;border-radius:6px;background:var(--teal);
-  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12l4 4 10-10' fill='none' stroke='black' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat,linear-gradient(#000,#000);-webkit-mask-composite:xor;mask-composite:exclude}
-.gf-stage{display:grid;justify-items:center;gap:14px;min-height:420px;align-content:end;position:relative;padding-top:120px}
-.gf-box{appearance:none;border:0;background:none;padding:0;cursor:pointer;position:relative;width:min(300px,78vw);aspect-ratio:1/0.92;display:block;-webkit-tap-highlight-color:transparent}
-.gf-glow{position:absolute;inset:18% 4% -6%;background:radial-gradient(closest-side,rgba(242,140,56,.38),transparent);filter:blur(10px);opacity:0;transition:opacity .4s}
-.gf-base{position:absolute;z-index:3;left:6%;right:6%;bottom:0;height:62%;border-radius:10px 10px 18px 18px;background:var(--teal);
-  background-image:linear-gradient(90deg,transparent 43%,var(--orange) 43%,var(--orange) 57%,transparent 57%);box-shadow:inset 0 -14px 0 rgba(0,0,0,.12),0 26px 40px -26px rgba(21,78,85,.9)}
-.gf-lid{position:absolute;left:0;right:0;top:24%;height:20%;border-radius:12px;background:var(--teal-deep);z-index:4;
-  background-image:linear-gradient(90deg,transparent 42%,var(--orange) 42%,var(--orange) 58%,transparent 58%);transform-origin:12% 100%;
-  transition:transform .55s cubic-bezier(.34,1.56,.64,1)}
-.gf-bow{position:absolute;left:50%;bottom:92%;width:0;height:0}
-.gf-bow i{position:absolute;bottom:0;width:58px;height:40px;border:9px solid var(--orange);border-radius:50% 50% 50% 50%/60% 60% 40% 40%}
-.gf-bow i:first-child{right:-2px;transform:rotate(-24deg);transform-origin:right bottom}
-.gf-bow i:last-child{left:-2px;transform:rotate(24deg);transform-origin:left bottom}
-.gf-card{position:absolute;left:14%;right:14%;top:30%;height:58%;z-index:2;transition:transform .7s cubic-bezier(.22,1.2,.36,1) .12s}
-.gf-card-in{position:absolute;inset:0;border-radius:16px;background:#fff;border:2px solid var(--line);box-shadow:0 20px 40px -24px rgba(21,78,85,.7);
-  display:grid;align-content:start;gap:6px;padding:16px 16px;text-align:left;overflow:hidden}
-.gf-card-in::after{content:"";position:absolute;left:0;right:0;bottom:0;height:8px;background:var(--orange)}
-.gf-k{font:800 .8rem/1 var(--font-body);color:var(--orange-dark)}
-.gf-t{font:800 1.25rem/1.1 var(--font-display);color:var(--teal-deep)}
-.gf-for{font-size:.9rem;color:var(--ink-soft);line-height:1.35}
-.gf-paw{position:absolute;right:12px;bottom:16px;width:30px;height:30px;color:var(--teal);opacity:.9}
-.gf-paw svg{width:100%;height:100%}
-.gf-hint{margin:0;font-weight:700;color:var(--teal);font-size:.95rem;transition:opacity .3s}
-.gf-send{opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .35s .45s,transform .35s .45s;min-height:52px}
-@media(hover:hover){.gf-box:hover .gf-lid{transform:translateY(-12px) rotate(-4deg)}.gf-box:hover .gf-glow{opacity:.7}}
-.gf-box:focus-visible{outline:3px solid var(--orange);outline-offset:8px;border-radius:18px}
-.gf-stage.open .gf-lid{transform:translate(-36%,-215%) rotate(-18deg)}
-.gf-stage.open .gf-card{transform:translate(12%,-80%) rotate(5deg)}
-.gf-stage.open .gf-glow{opacity:1}
+.gf-sec{--gold-1:#F6E3A6;--gold-2:#D8B262;--gold-3:#B98A3A;--gold-txt:#E2C47E;--night:#0E3338}
+.gf-panel{position:relative;overflow:hidden;border-radius:36px;padding:clamp(24px,5.5vw,72px);display:grid;grid-template-columns:minmax(0,1fr);gap:30px;align-items:center;color:#fff;
+  background:radial-gradient(120% 90% at 85% 45%,#1E6871 0%,#14484F 42%,var(--night) 100%);box-shadow:0 40px 80px -50px rgba(14,51,56,.9)}
+.gf-panel::before{content:"";position:absolute;inset:14px;border:1px solid rgba(226,196,126,.32);border-radius:26px;pointer-events:none}
+@media(min-width:900px){.gf-panel{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+.gf-copy{position:relative;display:grid;gap:20px;justify-items:start;z-index:1}
+.gf-eyebrow{font:700 .95rem/1 var(--font-body);color:var(--gold-txt);letter-spacing:.02em;display:inline-flex;align-items:center;gap:10px}
+.gf-eyebrow::before{content:"";width:28px;height:1px;background:linear-gradient(90deg,var(--gold-3),var(--gold-1))}
+.gf-copy h2{color:#fff;font-size:clamp(2rem,3.8vw,2.95rem);max-width:17ch}
+.gf-lede{margin:0;color:#CFE3E3;font-size:1.12rem;max-width:46ch}
+.gf-list{list-style:none;margin:0;padding:0;display:grid;gap:12px;color:#EAF4F4}
+.gf-list li{position:relative;padding-left:30px}
+.gf-list li::before{content:"";position:absolute;left:2px;top:.42em;width:12px;height:12px;transform:rotate(45deg);border-radius:2px;
+  background:linear-gradient(135deg,var(--gold-1),var(--gold-3))}
+.gf-cta{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;min-height:58px;padding:0 32px;border-radius:999px;text-decoration:none;
+  font:800 1.06rem/1 var(--font-body);color:#2A1E07;background:linear-gradient(135deg,#F7E6AE 0%,#D9B466 48%,#BF9142 100%);
+  box-shadow:0 14px 30px -14px rgba(217,180,102,.7),inset 0 1px 0 rgba(255,255,255,.6);transition:transform .2s,box-shadow .2s}
+.gf-cta:hover{transform:translateY(-2px);box-shadow:0 18px 34px -14px rgba(217,180,102,.85),inset 0 1px 0 rgba(255,255,255,.6)}
+.gf-cta::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);transition:left .7s}
+.gf-cta:hover::after{left:120%}
+.gf-cta:focus-visible{outline:3px solid #fff;outline-offset:3px}
+
+.gf-stage{position:relative;display:grid;justify-items:center;gap:16px;padding-top:170px;z-index:1}
+.gf-halo{position:absolute;left:50%;top:58%;width:420px;height:420px;transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(closest-side,rgba(226,196,126,.28),rgba(226,196,126,0));transition:opacity .6s,transform .8s;pointer-events:none}
+.gf-box{appearance:none;border:0;background:none;padding:0;cursor:pointer;position:relative;width:min(390px,100%);aspect-ratio:320/300;display:block;-webkit-tap-highlight-color:transparent}
+.gf-box:focus-visible{outline:2px solid var(--gold-txt);outline-offset:10px;border-radius:20px}
+.gf-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.gf-base{z-index:3}
+.gf-lid{z-index:4;transform-origin:50% 45%;transition:transform .7s cubic-bezier(.34,1.4,.64,1)}
+.gf-card{position:absolute;z-index:2;left:15%;right:15%;top:38%;height:54%;transition:transform .9s cubic-bezier(.2,1.15,.3,1) .15s}
+.gf-card-in{position:absolute;inset:0;border-radius:14px;padding:14px 16px 14px;display:grid;align-content:start;gap:3px;text-align:left;overflow:hidden;
+  background:linear-gradient(160deg,#FFFDF7 0%,#F7EFDC 100%);color:var(--teal-deep);box-shadow:0 24px 40px -22px rgba(0,0,0,.65)}
+.gf-card-in::before{content:"";position:absolute;inset:6px;border:1px solid #D4AC5C;border-radius:10px;pointer-events:none}
+.gf-foil{position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.85) 50%,transparent 65%);transform:translateX(-120%);pointer-events:none}
+.gf-card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.gf-k{font:700 .78rem/1 var(--font-body);color:#A7782C;letter-spacing:.04em}
+.gf-seal{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold-1),var(--gold-3));color:#3A2A0B;box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
+.gf-seal svg{width:15px;height:15px}
+.gf-to{font:800 1.7rem/1.05 var(--font-display);color:var(--teal-deep);letter-spacing:-.02em}
+.gf-from{font:600 .95rem/1.2 var(--font-body);color:#5B6B78}
+.gf-to small,.gf-from small{font:600 .8rem/1 var(--font-body);color:#A7782C;margin-right:4px;letter-spacing:0}
+.gf-what{margin-top:8px;padding-top:8px;border-top:1px solid #E8D9B5;font:700 .8rem/1.2 var(--font-body);color:var(--teal)}
+.gf-hint{margin:0;font-weight:600;color:var(--gold-txt);font-size:.95rem;letter-spacing:.02em;transition:opacity .3s}
+.gf-send{opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .4s .6s,transform .4s .6s}
+.gf-spark{position:absolute;width:14px;height:14px;opacity:0;pointer-events:none;background:linear-gradient(135deg,#FFF6D6,var(--gold-2));
+  clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
+.gf-spark.s1{left:22%;top:22%}.gf-spark.s2{right:20%;top:12%;width:10px;height:10px}.gf-spark.s3{right:14%;top:46%;width:18px;height:18px}.gf-spark.s4{left:16%;top:52%;width:9px;height:9px}
+@media(hover:hover){.gf-stage:not(.open) .gf-box:hover .gf-lid{transform:translateY(-14px) rotate(-3deg)}.gf-stage:not(.open) .gf-box:hover~.gf-halo,.gf-stage:not(.open):hover .gf-halo{transform:translate(-50%,-50%) scale(1.08)}}
+.gf-stage.open .gf-lid{transform:translate(-9%,-62%) rotate(-8deg)}
+.gf-stage.open .gf-card{transform:translate(4%,-70%) rotate(3deg)}
+.gf-stage.open .gf-foil{animation:gfFoil 1.2s ease .9s 1 forwards}
+.gf-stage.open .gf-spark{animation:gfSpark 1.4s ease .7s 1 forwards}
+.gf-stage.open .gf-spark.s2{animation-delay:.85s}.gf-stage.open .gf-spark.s3{animation-delay:1s}.gf-stage.open .gf-spark.s4{animation-delay:1.1s}
 .gf-stage.open .gf-hint{opacity:0}
 .gf-stage.open .gf-send{opacity:1;transform:none;pointer-events:auto}
-@media(max-width:600px){.gf-stage{padding-top:180px}.gf-stage.open .gf-lid{transform:translate(-3%,-340%) rotate(-7deg)}.gf-stage.open .gf-card{transform:translate(3%,-80%) rotate(4deg)}}
-@keyframes gfNudge{0%,86%,100%{transform:rotate(0)}89%{transform:rotate(-5deg)}92%{transform:rotate(4deg)}95%{transform:rotate(-2deg)}}
-.gf-stage:not(.open) .gf-box{animation:gfNudge 4.5s ease-in-out 1.5s infinite;transform-origin:50% 100%}
-@media(prefers-reduced-motion:reduce){.gf-lid,.gf-card,.gf-send{transition:none}.gf-stage:not(.open) .gf-box{animation:none}}
+@keyframes gfFoil{to{transform:translateX(120%)}}
+@keyframes gfSpark{0%{opacity:0;transform:scale(.2) rotate(0)}40%{opacity:1;transform:scale(1.15) rotate(45deg)}100%{opacity:.85;transform:scale(1) rotate(90deg)}}
+@keyframes gfFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.gf-stage:not(.open) .gf-box{animation:gfFloat 3.6s ease-in-out infinite}
+@media(max-width:600px){.gf-stage{padding-top:175px}.gf-stage.open .gf-card{transform:translate(3%,-86%) rotate(3deg)}.gf-stage.open .gf-lid{transform:translate(-8%,-76%) rotate(-8deg)}.gf-to{font-size:1.35rem}.gf-card-in{padding:12px 13px}}
+@media(prefers-reduced-motion:reduce){.gf-lid,.gf-card,.gf-send,.gf-cta{transition:none}.gf-stage:not(.open) .gf-box,.gf-stage.open .gf-foil,.gf-stage.open .gf-spark{animation:none}.gf-stage.open .gf-spark{opacity:.85}}
 </style>
 
 <!-- ===== Reusable dog faces (colors come from CSS variables on each <svg>) ===== -->
@@ -904,36 +923,73 @@ s.was { opacity: .72; font-weight: 600; text-decoration-thickness: 2px; margin-r
   </section>
 
   <!-- GIFT -->
-  <section id="gift" class="gf-sec" style="padding-top:0">
-    <div class="wrap gf-grid">
-      <div class="gf-copy">
-        <span class="eyebrow" data-gt="eyebrow">A gift for dog lovers</span>
-        <h2 data-gt="h">Know someone who loves their dog? Give them PupFlow.</h2>
-        <p class="lede" data-gt="lede">For a birthday, a new puppy, or just because. You pay, they get a 90-day plan made for their dog.</p>
-        <ul class="gf-list">
-          <li data-gt="l1">They get a gift card by email, with your message.</li>
-          <li data-gt="l2">They answer 15 questions about their dog. Nothing to pay.</li>
-          <li data-gt="l3">You choose the plan language and can add a 3rd problem.</li>
-        </ul>
-        <a class="btn shine gf-cta" href="gift.html" data-gift-link><span data-gt="cta">Send a gift card</span></a>
-      </div>
-      <div class="gf-stage">
-        <button type="button" class="gf-box" id="gfBox" aria-expanded="false" aria-controls="gfCard">
-          <span class="gf-glow" aria-hidden="true"></span>
-          <span class="gf-card" id="gfCard" aria-hidden="true">
-            <span class="gf-card-in">
-              <span class="gf-k" data-gt="k">Gift card</span>
-              <b class="gf-t" data-gt="t">PupFlow 90-day plan</b>
-              <span class="gf-for" data-gt="for">For the dog lover in your life</span>
-              <span class="gf-paw" aria-hidden="true"><svg><use href="#paw"/></svg></span>
+  <section id="gift" class="gf-sec">
+    <div class="wrap">
+      <div class="gf-panel">
+        <div class="gf-copy">
+          <span class="gf-eyebrow" data-gt="eyebrow">PupFlow gift card</span>
+          <h2 data-gt="h">The gift every dog lover wishes someone thought of.</h2>
+          <p class="gf-lede" data-gt="lede">A 90-day plan written for their dog, wrapped as a gift card with your name and your words. For a birthday, a new puppy, or just because.</p>
+          <ul class="gf-list">
+            <li data-gt="l1">Arrives by email as a card from you, with your message.</li>
+            <li data-gt="l2">They tell us about their dog. They never pay a thing.</li>
+            <li data-gt="l3">You choose the language, and can add a 3rd problem.</li>
+          </ul>
+          <a class="gf-cta" href="gift.html" data-gift-link><span data-gt="cta">Give a gift card</span></a>
+        </div>
+        <div class="gf-stage" id="gfStage">
+          <span class="gf-halo" aria-hidden="true"></span>
+          <button type="button" class="gf-box" id="gfBox" aria-expanded="false" aria-controls="gfCard">
+            <span class="gf-card" id="gfCard" aria-hidden="true">
+              <span class="gf-card-in">
+                <span class="gf-foil"></span>
+                <span class="gf-card-top"><span class="gf-k" data-gt="k">Gift card</span><span class="gf-seal"><svg><use href="#paw"/></svg></span></span>
+                <span class="gf-to"><small data-gt="to">For</small> María</span>
+                <span class="gf-from"><small data-gt="from">from</small> Alejandro</span>
+                <span class="gf-what" data-gt="t">PupFlow 90-day plan</span>
+              </span>
             </span>
-          </span>
-          <span class="gf-lid" aria-hidden="true"><span class="gf-bow"><i></i><i></i></span></span>
-          <span class="gf-base" aria-hidden="true"></span>
-          <span class="sr-only" data-gt="open">Open the gift</span>
-        </button>
-        <p class="gf-hint" id="gfHint" data-gt="hint">Tap the gift</p>
-        <a class="btn gf-send" id="gfSend" href="gift.html" data-gift-link tabindex="-1"><span data-gt="send">Send this gift card</span></a>
+            <svg class="gf-svg gf-base" viewBox="0 0 320 300" aria-hidden="true">
+              <defs>
+                <linearGradient id="gfGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6E3A6"/><stop offset=".42" stop-color="#D8B262"/><stop offset=".7" stop-color="#B98A3A"/><stop offset="1" stop-color="#E9CD86"/></linearGradient>
+                <linearGradient id="gfGoldV" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#B98A3A"/><stop offset=".35" stop-color="#F3DD9D"/><stop offset=".6" stop-color="#D4AC5C"/><stop offset="1" stop-color="#A7782C"/></linearGradient>
+                <linearGradient id="gfTeal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1D6670"/><stop offset="1" stop-color="#0F3A40"/></linearGradient>
+                <linearGradient id="gfTealL" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#226F79"/><stop offset="1" stop-color="#14474E"/></linearGradient>
+                <pattern id="gfWeave" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="transparent"/><rect width="1" height="6" fill="rgba(255,255,255,.035)"/></pattern>
+              </defs>
+              <ellipse cx="160" cy="288" rx="128" ry="9" fill="rgba(0,0,0,.28)"/>
+              <rect x="44" y="132" width="232" height="150" rx="8" fill="url(#gfTeal)"/>
+              <rect x="44" y="132" width="232" height="150" rx="8" fill="url(#gfWeave)"/>
+              <rect x="44" y="132" width="232" height="16" fill="rgba(0,0,0,.22)"/>
+              <rect x="146" y="132" width="28" height="150" fill="url(#gfGoldV)"/>
+              <rect x="146" y="132" width="28" height="16" fill="rgba(0,0,0,.18)"/>
+              <rect x="44.5" y="132.5" width="231" height="149" rx="8" fill="none" stroke="rgba(233,205,134,.35)"/>
+            </svg>
+            <svg class="gf-svg gf-lid" viewBox="0 0 320 300" aria-hidden="true">
+              <rect x="32" y="98" width="256" height="40" rx="7" fill="url(#gfTealL)"/>
+              <rect x="32" y="98" width="256" height="40" rx="7" fill="url(#gfWeave)"/>
+              <rect x="32" y="130" width="256" height="8" rx="3" fill="rgba(0,0,0,.18)"/>
+              <rect x="144" y="98" width="32" height="40" fill="url(#gfGoldV)"/>
+              <rect x="32.5" y="98.5" width="255" height="39" rx="7" fill="none" stroke="rgba(233,205,134,.45)"/>
+              <g class="gf-bow" transform="translate(160 100) scale(1.4) translate(-160 -100)">
+                <path d="M158 100 C150 112 140 128 128 140 L142 136 L146 150 C152 134 158 118 162 102 Z" fill="#B98A3A"/>
+                <path d="M162 100 C170 112 180 128 192 140 L178 136 L174 150 C168 134 162 118 158 102 Z" fill="#A7782C"/>
+                <path d="M160 98 C146 74 112 58 98 70 C86 81 100 104 160 100 Z" fill="url(#gfGold)"/>
+                <path d="M160 98 C147 82 120 72 110 78 C104 83 116 96 160 100 Z" fill="#A7782C" opacity=".55"/>
+                <path d="M160 98 C174 74 208 58 222 70 C234 81 220 104 160 100 Z" fill="url(#gfGold)"/>
+                <path d="M160 98 C173 82 200 72 210 78 C216 83 204 96 160 100 Z" fill="#A7782C" opacity=".55"/>
+                <path d="M104 74 C114 66 132 68 146 80" fill="none" stroke="#FFF3CC" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+                <path d="M216 74 C206 66 188 68 174 80" fill="none" stroke="#FFF3CC" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+                <rect x="149" y="88" width="22" height="20" rx="7" fill="url(#gfGoldV)"/>
+                <rect x="152" y="91" width="7" height="12" rx="3" fill="#FFF3CC" opacity=".55"/>
+              </g>
+            </svg>
+            <span class="sr-only" data-gt="open">Open the gift</span>
+          </button>
+          <span class="gf-spark s1" aria-hidden="true"></span><span class="gf-spark s2" aria-hidden="true"></span><span class="gf-spark s3" aria-hidden="true"></span><span class="gf-spark s4" aria-hidden="true"></span>
+          <p class="gf-hint" data-gt="hint">Tap to open</p>
+          <a class="gf-cta gf-send" id="gfSend" href="gift.html" data-gift-link tabindex="-1"><span data-gt="send">Send this gift card</span></a>
+        </div>
       </div>
     </div>
   </section>
@@ -1449,18 +1505,18 @@ document.addEventListener("click", e => {
 /* ===== Gift card section: opens on tap, follows the page language ===== */
 (function () {
   const GT = {
-    en: { eyebrow: "A gift for dog lovers", h: "Know someone who loves their dog? Give them PupFlow.",
-          lede: "For a birthday, a new puppy, or just because. You pay, they get a 90-day plan made for their dog.",
-          l1: "They get a gift card by email, with your message.", l2: "They answer 15 questions about their dog. Nothing to pay.",
-          l3: "You choose the plan language and can add a 3rd problem.", cta: "Send a gift card", k: "Gift card", t: "PupFlow 90-day plan",
-          for: "For the dog lover in your life", open: "Open the gift", hint: "Tap the gift", send: "Send this gift card", nav: "Gift" },
-    es: { eyebrow: "Para regalar", h: "¿Conoces a alguien que ama a su perro? Regálale PupFlow.",
-          lede: "Para un cumpleaños, un cachorro nuevo o porque sí. Tú pagas y esa persona recibe un plan de 90 días hecho para su perro.",
-          l1: "Le llega una gift card por email, con tu mensaje.", l2: "Responde 15 preguntas sobre su perro. No paga nada.",
-          l3: "Tú eliges el idioma del plan y puedes sumar un 3.er problema.", cta: "Regalar una gift card", k: "Gift card", t: "Plan PupFlow de 90 días",
-          for: "Para esa persona que ama a su perro", open: "Abrir el regalo", hint: "Toca el regalo", send: "Enviar esta gift card", nav: "Regalar" }
+    en: { eyebrow: "PupFlow gift card", h: "The gift every dog lover wishes someone thought of.",
+          lede: "A 90-day plan written for their dog, wrapped as a gift card with your name and your words. For a birthday, a new puppy, or just because.",
+          l1: "Arrives by email as a card from you, with your message.", l2: "They tell us about their dog. They never pay a thing.",
+          l3: "You choose the language, and can add a 3rd problem.", cta: "Give a gift card", k: "Gift card", to: "For", from: "from",
+          t: "PupFlow 90-day plan", open: "Open the gift", hint: "Tap to open", send: "Send this gift card", nav: "Gift" },
+    es: { eyebrow: "Gift card PupFlow", h: "El regalo que todo amante de los perros quisiera recibir.",
+          lede: "Un plan de 90 días hecho para su perro, envuelto en una gift card con tu nombre y tus palabras. Para un cumpleaños, un cachorro nuevo o porque sí.",
+          l1: "Le llega por email como una tarjeta tuya, con tu mensaje.", l2: "Nos cuenta sobre su perro. No paga absolutamente nada.",
+          l3: "Tú eliges el idioma y puedes sumar un 3.er problema.", cta: "Regalar una gift card", k: "Gift card", to: "Para", from: "de",
+          t: "Plan PupFlow de 90 días", open: "Abrir el regalo", hint: "Toca para abrir", send: "Enviar esta gift card", nav: "Regalar" }
   };
-  const stage = document.querySelector(".gf-stage"), box = document.getElementById("gfBox"), send = document.getElementById("gfSend");
+  const stage = document.getElementById("gfStage"), box = document.getElementById("gfBox"), send = document.getElementById("gfSend");
   function paint() {
     const l = document.documentElement.lang === "es" ? "es" : "en";
     document.querySelectorAll("[data-gt]").forEach(e => { const v = GT[l][e.dataset.gt]; if (v) e.textContent = v; });
@@ -1473,7 +1529,7 @@ document.addEventListener("click", e => {
     stage.classList.toggle("open", open);
     box.setAttribute("aria-expanded", String(open));
     send.tabIndex = open ? 0 : -1;
-    if (open) { try { fbq("trackCustom", "GiftOpen"); } catch (e) {} setTimeout(() => send.focus({ preventScroll: true }), 650); }
+    if (open) { try { fbq("trackCustom", "GiftOpen"); } catch (e) {} setTimeout(() => send.focus({ preventScroll: true }), 900); }
   });
 })();
 </script>
