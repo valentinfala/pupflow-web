@@ -73,3 +73,17 @@ export async function saveStory(order, patch) {
 }
 export const SITE = () => process.env.URL || "https://pupflowplan.com";
 export const actionLink = (order, a) => `${SITE()}/.netlify/functions/approve?order=${order}&a=${a}&s=${linkSig(order, a)}`;
+
+// Gift cards (key gift/ORDER, ORDER = the PayPal order the giver paid). The recipient later uses that same order
+// as their plan purchase, so payment checks, the 3rd-program add-on and the generator work exactly like a normal sale.
+export async function getGift(order) {
+  return await store().get("gift/" + order, { type: "json" });
+}
+export async function saveGift(order, patch) {
+  const cur = (await getGift(order)) || {};
+  const next = { ...cur, ...patch, updated_at: new Date().toISOString() };
+  await store().setJSON("gift/" + order, next);
+  return next;
+}
+// Link the recipient opens: the regular form with a signed purchase code, in the plan language the giver picked.
+export const giftLink = (order, pl, token) => `${SITE()}/form.html?` + new URLSearchParams({ order, t: token, plan_lang: pl, lang: pl, gift: "1" });

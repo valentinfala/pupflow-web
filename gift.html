@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gift card · PupFlow</title>
+<meta name="description" content="Give a dog lover a personalized 90-day training and feeding plan for their dog.">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;500;600;700;800&display=swap">
+<style>
+:root{--teal:#1F6F78;--deep:#154E55;--orange:#F28C38;--orange-dark:#C9661A;--cream:#FFF6EC;--mint:#EEF6F6;--ink:#22313F;--soft:#5B6B78;--line:#E1ECEC;
+  --display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;--body:"Figtree","Helvetica Neue",Arial,system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font:400 16px/1.55 var(--body);-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--display);letter-spacing:-.02em;line-height:1.08;margin:0;color:var(--deep);text-wrap:balance}
+.top{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;max-width:1080px;margin:0 auto}
+.top img{height:34px;display:block}
+.lang{display:inline-flex;padding:3px;border-radius:999px;background:var(--mint);border:1px solid var(--line);gap:2px}
+.lang button{border:0;background:transparent;font:800 13px/1 var(--body);color:var(--soft);min-width:40px;min-height:32px;border-radius:999px;cursor:pointer}
+.lang button[aria-pressed=true]{background:var(--teal);color:#fff}
+.test{display:none;background:#FFE7CF;color:#7a3f00;text-align:center;font-size:14px;font-weight:700;padding:8px 16px}.test.on{display:block}
+main{max-width:1080px;margin:0 auto;padding:12px 16px 72px;display:grid;gap:28px}
+@media(min-width:900px){main{grid-template-columns:.9fr 1.1fr;align-items:start;padding-top:32px;gap:48px}}
+.intro h1{font-size:clamp(28px,4.4vw,44px);margin-bottom:12px}
+.intro p{color:var(--soft);margin:0 0 22px;max-width:46ch;font-size:17px}
+@media(min-width:900px){.side{position:sticky;top:24px}}
+
+/* the card, updated live while the giver types */
+.card{position:relative;border-radius:24px;background:var(--teal);color:#fff;padding:24px 24px 30px;overflow:hidden;box-shadow:0 30px 60px -36px rgba(21,78,85,.9);
+  transform:rotate(-1.5deg);transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
+.card::after{content:"";position:absolute;left:0;right:0;bottom:0;height:10px;background:var(--orange)}
+.card .k{display:flex;justify-content:space-between;align-items:center;color:#FFD9B5;font-weight:800;font-size:14px}
+.card .k span:last-child{font-size:30px;line-height:1}
+.card .t{font:800 clamp(24px,3vw,30px)/1.1 var(--display);margin:8px 0 16px}
+.card .msg{background:rgba(255,255,255,.12);border-radius:14px;padding:14px 16px;font-size:16px;white-space:pre-line;min-height:24px;overflow-wrap:anywhere}
+.card .msg b{display:block;font-size:18px}
+.card .msg[hidden]{display:none}
+.card .who{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:16px;font-size:14px;color:#DCEFEF}
+.card .who b{color:#fff}
+.card.bump{transform:rotate(0) scale(1.015)}
+.inc{margin:20px 4px 0;padding:0;list-style:none;display:grid;gap:8px;font-size:15px}
+.inc li{display:flex;gap:10px}.inc li::before{content:"✓";color:var(--teal);font-weight:800}
+
+/* form */
+.panel{border:1px solid var(--line);border-radius:24px;padding:clamp(18px,3vw,28px);background:#fff;box-shadow:0 24px 50px -40px rgba(21,78,85,.5)}
+.grp{border:0;margin:0 0 22px;padding:0;min-width:0}
+.grp>legend{font:800 19px/1.2 var(--display);color:var(--deep);margin-bottom:12px;padding:0}
+.row{display:grid;gap:12px}@media(min-width:560px){.row.two{grid-template-columns:1fr 1fr}}
+label.f{display:grid;gap:6px;font-weight:700;font-size:14px}
+label.f small{font-weight:500;color:var(--soft)}
+input[type=text],input[type=email],textarea{width:100%;font:500 16px/1.4 var(--body);color:var(--ink);border:1.5px solid #CFDDDF;border-radius:14px;padding:13px 14px;background:#fff}
+textarea{min-height:96px;resize:vertical}
+input:focus,textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 4px rgba(31,111,120,.14)}
+.bad{border-color:#C6392C!important}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:9px 14px;font:700 14px/1 var(--body);color:var(--ink);cursor:pointer}
+.chip[aria-pressed=true]{background:var(--mint);border-color:var(--teal);color:var(--deep)}
+.count{display:block;text-align:right;font-size:12px;color:var(--soft);margin-top:4px}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.seg button{border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:12px;font:700 15px/1.2 var(--body);color:var(--ink);cursor:pointer;text-align:left}
+.seg button small{display:block;font-weight:500;color:var(--soft);font-size:13px;margin-top:3px}
+.seg button[aria-pressed=true]{border-color:var(--teal);background:var(--mint)}
+.add{display:flex;gap:14px;align-items:flex-start;width:100%;text-align:left;border:1.5px dashed #E8C7A5;background:var(--cream);border-radius:16px;padding:14px 16px;cursor:pointer;font:inherit;color:inherit}
+.add[aria-checked=true]{border-style:solid;border-color:var(--orange)}
+.box{flex:none;width:24px;height:24px;border-radius:8px;border:2px solid var(--orange);display:grid;place-items:center;margin-top:2px;color:#fff;font-weight:900;font-size:15px}
+.add[aria-checked=true] .box{background:var(--orange)}
+.add b{display:block;font-size:16px}.add span.d{display:block;color:var(--soft);font-size:14px;margin-top:2px}
+.add .pr{margin-left:auto;font-weight:800;white-space:nowrap}
+.base{font-size:14px;color:var(--soft);margin:0 0 10px}
+.sum{border-top:1px dashed #E3D2BF;margin-top:6px;padding-top:12px;display:grid;gap:6px}
+.sum div{display:flex;justify-content:space-between;gap:10px}
+.sum .tot{font-weight:800;font-size:19px;color:var(--deep);margin-top:4px}
+.sum s{opacity:.55;margin-right:6px}
+.promo{justify-self:start;display:inline-block;background:var(--orange);color:#fff;font-weight:800;font-size:12.5px;padding:5px 11px;border-radius:999px}
+.promo[hidden]{display:none}
+.pp{min-height:110px;margin-top:18px}
+.msgbox{display:none;margin-top:14px;padding:12px 14px;border-radius:12px;font-size:15px}.msgbox.on{display:block}
+.msgbox.err{background:#fde8e8;color:#8a1c1c}.msgbox.ok{background:#e6f6ec;color:#1d5b33}
+.safe{display:flex;gap:8px;align-items:center;justify-content:center;color:var(--soft);font-size:14px;margin-top:12px}
+.rf{color:var(--soft);font-size:13px;text-align:center;margin:10px 0 0}.rf a{color:var(--teal)}
+.spin{width:28px;height:28px;border:3px solid var(--mint);border-top-color:var(--teal);border-radius:50%;animation:s 1s linear infinite;margin:30px auto}
+@keyframes s{to{transform:rotate(360deg)}}
+.done{text-align:center;display:grid;gap:14px;justify-items:center;padding:20px 0}
+.done .big{font-size:58px;line-height:1}
+.done p{color:var(--soft);max-width:44ch;margin:0}
+.done a{color:var(--teal);font-weight:700}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){.card{transition:none}.spin{animation:none}}
+</style>
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1867773444384467');fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1867773444384467&ev=PageView&noscript=1"></noscript>
+<!-- End Meta Pixel -->
+</head>
+<body>
+<div class="test" id="test"></div>
+<div class="top"><a href="index.html" id="home"><img src="logo.png" alt="PupFlow"></a>
+  <div class="lang"><button type="button" data-l="en">EN</button><button type="button" data-l="es">ES</button></div></div>
+<main>
+  <section class="side">
+    <div class="intro"><h1 data-t="h1"></h1><p data-t="lead"></p></div>
+    <div class="card" id="card" aria-live="polite">
+      <div class="k"><span data-t="kicker"></span><span aria-hidden="true">🎁</span></div>
+      <div class="t" data-t="title"></div>
+      <div class="msg" id="cMsg" hidden></div>
+      <div class="who"><span><b data-t="for"></b> <span id="cTo"></span></span><span><b data-t="from"></b> <span id="cFrom"></span></span><span id="cProgs"></span></div>
+    </div>
+    <ul class="inc"><li data-t="i1"></li><li data-t="i2"></li><li data-t="i3"></li></ul>
+  </section>
+
+  <section class="panel" id="panel">
+    <form id="f" novalidate>
+      <fieldset class="grp"><legend data-t="g1"></legend>
+        <div class="row two">
+          <label class="f"><span data-t="toName"></span><input type="text" id="to_name" maxlength="40" autocomplete="off"></label>
+          <label class="f"><span data-t="toEmail"></span><input type="email" id="to_email" maxlength="254" autocomplete="off" inputmode="email"></label>
+        </div>
+      </fieldset>
+      <fieldset class="grp"><legend data-t="g2"></legend>
+        <label class="f"><span data-t="fromName"></span><input type="text" id="from_name" maxlength="40" autocomplete="given-name"></label>
+      </fieldset>
+      <fieldset class="grp"><legend data-t="g3"></legend>
+        <div class="chips" id="chips" role="group"></div>
+        <label class="f"><span><span data-t="msgL"></span> <small data-t="opt"></small></span><textarea id="message" maxlength="300"></textarea></label>
+        <span class="count" id="count">0/300</span>
+      </fieldset>
+      <fieldset class="grp"><legend data-t="g4"></legend>
+        <div class="seg" role="group" id="pl">
+          <button type="button" data-pl="es"><span data-t="plEs"></span><small data-t="plEsS"></small></button>
+          <button type="button" data-pl="en"><span data-t="plEn"></span><small data-t="plEnS"></small></button>
+        </div>
+      </fieldset>
+      <fieldset class="grp"><legend data-t="g5"></legend>
+        <p class="base" data-t="base"></p>
+        <button type="button" class="add" id="addon" role="checkbox" aria-checked="false">
+          <span class="box" aria-hidden="true">✓</span>
+          <span><b data-t="addT"></b><span class="d" data-t="addD"></span></span>
+          <span class="pr" id="addPr"></span>
+        </button>
+        <div class="sum">
+          <span class="promo" id="promo" hidden></span>
+          <div><span data-t="item"></span><span id="sPlan"></span></div>
+          <div id="sAddRow" hidden><span data-t="item3"></span><span id="sAdd"></span></div>
+          <div class="tot"><span data-t="total"></span><span id="sTot"></span></div>
+        </div>
+      </fieldset>
+      <h2 style="font-size:20px;margin:6px 0 0" data-t="pay"></h2>
+      <div class="pp" id="pp"><div class="spin"></div></div>
+      <div class="msgbox" id="msg"></div>
+      <div class="safe"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1.5"/><path d="M5 7V5a3 3 0 0 1 6 0v2"/></svg><span data-t="safe"></span></div>
+      <p class="rf"><span data-t="rf"></span> <a href="index.html#refund" data-t="rfa"></a>.</p>
+    </form>
+  </section>
+</main>
+<script>
+const T = {
+  en: { h1: "Give a dog lover their own plan", lead: "Fill in who it's for and add a message. We email them a gift card, they answer 15 questions about their dog, and their 90-day plan arrives as a PDF.",
+        kicker: "Gift card", title: "PupFlow 90-day plan", for: "For:", from: "From:", progs: "{n} training programs", toPh: "Their name", fromPh: "You",
+        i1: "Training, feeding and a daily routine made for their dog", i2: "In English or Spanish, you choose", i3: "They don't pay anything, ever",
+        g1: "Who is it for?", toName: "Their name", toEmail: "Their email", g2: "Who is it from?", fromName: "Your name (it goes on the card)",
+        g3: "Your message", msgL: "Write a few words", opt: "(optional)",
+        occ: { birthday: "Happy birthday! 🎂", newdog: "Congrats on the new pup! 🐶", holidays: "Happy holidays! 🎄", thanks: "Thank you! 💛", just: "Just because 💛" },
+        g4: "Plan language", plEs: "Spanish", plEsS: "Form and PDF in Spanish", plEn: "English", plEnS: "Form and PDF in English",
+        g5: "What's included", base: "The plan includes training programs for 2 problems they pick (like pulling on the leash or barking).",
+        addT: "Add a 3rd problem", addD: "They'll be able to pick up to 3 problems. Already paid, so they're never asked to pay.",
+        item: "PupFlow plan (gift)", item3: "3rd problem", total: "Total", promo: "🚀 Launch promo", pay: "Pay and send the gift",
+        safe: "Secure payment processed by PayPal. We never see your card details.", rf: "Digital product. All sales final, except as described in our", rfa: "Refund Policy",
+        test: "TEST MODE · Payments here are not real", off: "Payments aren't available right now. Please try again in a few minutes.",
+        need: "Fill in their name, their email and your name to continue.", fail: "We couldn't complete the payment. You were not charged. Please try again.",
+        notPaid: "PayPal didn't confirm the payment. If you were charged, write to us and we'll fix it right away.", wait: "Confirming your payment…",
+        doneT: "Your gift is on its way", doneL: "We're emailing the gift card to {name} ({email}) right now. You'll get a receipt with the gift link too, in case you'd rather give it in person.",
+        doneSpam: "If {name} can't find it in a few minutes, ask them to check the spam folder.", again: "Send another gift", back: "Back to PupFlow" },
+  es: { h1: "Regala un plan hecho para su perro", lead: "Completa para quién es y agrega un mensaje. Le mandamos una gift card por email, responde 15 preguntas sobre su perro y su plan de 90 días le llega en PDF.",
+        kicker: "Gift card", title: "Plan PupFlow de 90 días", for: "Para:", from: "De:", progs: "{n} programas de entrenamiento", toPh: "Su nombre", fromPh: "Tú",
+        i1: "Entrenamiento, alimentación y rutina diaria hechos para su perro", i2: "En español o en inglés, tú eliges", i3: "No paga nada, nunca",
+        g1: "¿Para quién es?", toName: "Su nombre", toEmail: "Su email", g2: "¿De parte de quién?", fromName: "Tu nombre (va en la tarjeta)",
+        g3: "Tu mensaje", msgL: "Escríbele unas palabras", opt: "(opcional)",
+        occ: { birthday: "¡Feliz cumpleaños! 🎂", newdog: "¡Felicidades por tu nuevo perro! 🐶", holidays: "¡Felices fiestas! 🎄", thanks: "¡Gracias! 💛", just: "Porque sí 💛" },
+        g4: "Idioma del plan", plEs: "Español", plEsS: "Formulario y PDF en español", plEn: "Inglés", plEnS: "Formulario y PDF en inglés",
+        g5: "Qué incluye", base: "El plan incluye programas de entrenamiento para 2 problemas que esa persona elige (por ejemplo, tirar de la correa o ladrar).",
+        addT: "Sumar un 3.er problema", addD: "Podrá elegir hasta 3 problemas. Ya queda pago, así que nunca se le pide pagar.",
+        item: "Plan PupFlow (regalo)", item3: "3.er problema", total: "Total", promo: "🚀 Promo de lanzamiento", pay: "Pagar y enviar el regalo",
+        safe: "Pago seguro procesado por PayPal. Nunca vemos los datos de tu tarjeta.", rf: "Producto digital. Sin reembolsos, salvo los casos de nuestra", rfa: "Política de reembolso",
+        test: "MODO PRUEBA · Los pagos acá no son reales", off: "El pago no está disponible en este momento. Vuelve a intentarlo en unos minutos.",
+        need: "Completa su nombre, su email y tu nombre para seguir.", fail: "No pudimos completar el pago. No se te cobró nada. Inténtalo de nuevo.",
+        notPaid: "PayPal no confirmó el pago. Si se te cobró, escríbenos y lo resolvemos enseguida.", wait: "Confirmando tu pago…",
+        doneT: "Tu regalo va en camino", doneL: "Le estamos mandando la gift card a {name} ({email}). A ti te llega un recibo con el link del regalo, por si prefieres dárselo en persona.",
+        doneSpam: "Si {name} no lo encuentra en unos minutos, que revise la carpeta de spam.", again: "Enviar otro regalo", back: "Volver a PupFlow" }
+};
+const OCC = ["birthday", "newdog", "holidays", "thanks", "just"];
+const q = new URLSearchParams(location.search);
+let saved = null; try { saved = localStorage.getItem("pf-lang"); } catch (e) {}
+let lang = q.get("lang") === "es" || q.get("lang") === "en" ? q.get("lang") : (saved === "es" || saved === "en" ? saved : (/^es\b/i.test(navigator.language || "") ? "es" : "en"));
+const G = { occasion: "", plan_lang: lang, addon: false };
+let price = "19.00", listPrice = "29.00", addonPrice = "9.00";
+const $ = id => document.getElementById(id);
+const t = k => T[lang][k];
+const usd = v => "US$" + (Number(v) % 1 ? Number(v).toFixed(2) : String(Number(v)));
+const total = () => (Number(price) + (G.addon ? Number(addonPrice) : 0)).toFixed(2);
+const val = id => $(id).value.trim();
+const EMAIL = /^[^\s@]{1,64}@[^\s@]{1,255}\.[^\s@]{2,}$/;
+
+function say(kind, text) { const m = $("msg"); m.className = "msgbox on " + kind; m.textContent = text; }
+function card() {
+  $("cTo").textContent = val("to_name") || t("toPh");
+  $("cFrom").textContent = val("from_name") || t("fromPh");
+  $("cProgs").textContent = t("progs").replace("{n}", G.addon ? 3 : 2);
+  const m = $("cMsg"), occ = G.occasion ? T[lang].occ[G.occasion] : "", txt = val("message");
+  m.hidden = !occ && !txt; m.textContent = "";
+  if (occ) { const b = document.createElement("b"); b.textContent = occ; m.append(b); }
+  if (txt) m.append(document.createTextNode(txt));
+  $("count").textContent = $("message").value.length + "/300";
+}
+function bump() { const c = $("card"); c.classList.add("bump"); clearTimeout(bump.t); bump.t = setTimeout(() => c.classList.remove("bump"), 260); }
+function paint() {
+  document.documentElement.lang = lang;
+  document.title = lang === "es" ? "Gift card · PupFlow" : "Gift card · PupFlow";
+  document.querySelectorAll("[data-t]").forEach(e => e.textContent = t(e.dataset.t));
+  $("to_name").placeholder = lang === "es" ? "Ej.: Sofía" : "e.g. Sophie";
+  $("to_email").placeholder = lang === "es" ? "sofia@email.com" : "sophie@email.com";
+  $("from_name").placeholder = lang === "es" ? "Ej.: Valentín" : "e.g. Alex";
+  $("message").placeholder = lang === "es" ? "Para que Toby y tú tengan los mejores paseos." : "For you and Toby, to many calm walks together.";
+  const ch = $("chips"); ch.textContent = "";
+  OCC.forEach(o => { const b = document.createElement("button"); b.type = "button"; b.className = "chip"; b.textContent = T[lang].occ[o];
+    b.setAttribute("aria-pressed", String(G.occasion === o)); b.onclick = () => { G.occasion = G.occasion === o ? "" : o; paint(); bump(); }; ch.append(b); });
+  document.querySelectorAll("#pl button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.pl === G.plan_lang)));
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.l === lang)));
+  $("addon").setAttribute("aria-checked", String(G.addon));
+  $("addPr").textContent = "+" + usd(addonPrice);
+  const promo = Number(listPrice) > Number(price);
+  $("promo").hidden = !promo; $("promo").textContent = t("promo");
+  $("sPlan").innerHTML = (promo ? "<s>" + usd(listPrice) + "</s>" : "") + usd(price);
+  $("sAddRow").hidden = !G.addon; $("sAdd").textContent = usd(addonPrice);
+  $("sTot").textContent = usd(total());
+  $("test").textContent = t("test");
+  $("home").href = "index.html?lang=" + lang;
+  document.querySelectorAll('a[href^="index.html#refund"]').forEach(a => a.href = "index.html?lang=" + lang + "#refund");
+  card();
+}
+document.querySelectorAll(".lang button").forEach(b => b.onclick = () => { lang = b.dataset.l; try { localStorage.setItem("pf-lang", lang); } catch (e) {} paint(); });
+document.querySelectorAll("#pl button").forEach(b => b.onclick = () => { G.plan_lang = b.dataset.pl; paint(); });
+$("addon").onclick = () => { G.addon = !G.addon; paint(); bump(); };
+["to_name", "from_name", "message", "to_email"].forEach(id => $(id).addEventListener("input", () => { $(id).classList.remove("bad"); card(); }));
+paint();
+
+function check() {
+  const bad = [];
+  if (!val("to_name")) bad.push("to_name");
+  if (!EMAIL.test(val("to_email"))) bad.push("to_email");
+  if (!val("from_name")) bad.push("from_name");
+  ["to_name", "to_email", "from_name"].forEach(id => $(id).classList.toggle("bad", bad.includes(id)));
+  if (bad.length) { say("err", t("need")); $(bad[0]).focus(); return false; }
+  $("msg").className = "msgbox"; return true;
+}
+async function post(fn, body) {
+  const r = await fetch("/.netlify/functions/" + fn, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+  const d = await r.json().catch(() => ({})); d._status = r.status; return d;
+}
+function done(d) {
+  const n = val("to_name"), e = val("to_email");
+  const p = $("panel"); p.textContent = "";
+  const box = document.createElement("div"); box.className = "done"; box.setAttribute("role", "status");
+  const big = document.createElement("div"); big.className = "big"; big.textContent = "🎁";
+  const h = document.createElement("h2"); h.textContent = t("doneT");
+  const p1 = document.createElement("p"); p1.textContent = t("doneL").replace("{name}", n).replace("{email}", e);
+  const p2 = document.createElement("p"); p2.textContent = t("doneSpam").replace("{name}", n);
+  const a1 = document.createElement("a"); a1.href = "gift.html?lang=" + lang; a1.textContent = t("again");
+  const a2 = document.createElement("a"); a2.href = "index.html?lang=" + lang; a2.textContent = t("back");
+  box.append(big, h, p1, p2, a1, a2); p.append(box);
+  scrollTo({ top: 0, behavior: "smooth" });
+}
+function loadSdk(clientId) {
+  return new Promise((ok, bad) => {
+    const s = document.createElement("script");
+    s.src = "https://www.paypal.com/sdk/js?client-id=" + encodeURIComponent(clientId) + "&currency=USD&intent=capture&locale=" + (lang === "es" ? "es_US" : "en_US");
+    s.onload = ok; s.onerror = bad; document.head.appendChild(s);
+  });
+}
+(async () => {
+  let cfg = {};
+  try { cfg = await (await fetch("/.netlify/functions/config")).json(); } catch (e) {}
+  if (cfg.price) price = cfg.price; if (cfg.listPrice) listPrice = cfg.listPrice; if (cfg.addonPrice) addonPrice = cfg.addonPrice;
+  paint();
+  if (cfg.env !== "live") $("test").classList.add("on");
+  if (!cfg.clientId) { $("pp").textContent = ""; say("err", t("off")); return; }
+  try { await loadSdk(cfg.clientId); } catch (e) { $("pp").textContent = ""; say("err", t("off")); return; }
+  $("pp").textContent = "";
+  paypal.Buttons({
+    style: { layout: "vertical", shape: "pill", label: "pay" },
+    onClick: (data, actions) => {
+      if (!check()) return actions.reject();
+      try { fbq("track", "InitiateCheckout", { value: Number(total()), currency: "USD", content_name: "PupFlow gift card" }); } catch (e) {}
+      return actions.resolve();
+    },
+    createOrder: async () => {
+      const d = await post("create-gift", { to_name: val("to_name"), to_email: val("to_email"), from_name: val("from_name"), message: val("message"),
+        occasion: G.occasion, plan_lang: G.plan_lang, page_lang: lang, addon: G.addon });
+      if (!d.id) { say("err", d.error === "bad_gift" ? t("need") : t("fail")); throw new Error("create"); }
+      return d.id;
+    },
+    onApprove: async data => {
+      say("ok", t("wait"));
+      let d; try { d = await post("capture-gift", { orderID: data.orderID }); } catch (e) { d = { error: "network" }; }
+      if (!d.ok) { say("err", t("notPaid") + " (" + [d._status, d.error, d.capture].filter(Boolean).join(" · ") + ")"); return; }
+      try { fbq("track", "Purchase", { value: Number(d.value) || Number(total()), currency: "USD", content_name: "PupFlow gift card", content_type: "product" }, { eventID: d.order }); } catch (e) {}
+      done(d);
+    },
+    onError: () => say("err", t("fail"))
+  }).render("#pp");
+})();
+</script>
+</body>
+</html>

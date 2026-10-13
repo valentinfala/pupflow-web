@@ -6,8 +6,10 @@
 //   GET  ?op=pdf&order=ID      read it back
 //   GET  ?op=links&order=ID    signed links for the review email
 //   POST ?op=story&order=ID    save the website card {card} of a customer who allowed it; returns the publish links
-import { json } from "../lib/shared.mjs";
-import { store, getOrder, saveOrder, paymentStatus, engineAuth, getStory, saveStory, actionLink } from "../lib/orders.mjs";
+//   GET  ?op=gift&order=ID     gift card record + the recipient's form link
+//   POST ?op=giftstatus&order=ID  merge JSON body into the gift record
+import { json, sign } from "../lib/shared.mjs";
+import { store, getOrder, saveOrder, paymentStatus, engineAuth, getStory, saveStory, actionLink, getGift, saveGift, giftLink } from "../lib/orders.mjs";
 export default async req => {
   if (!engineAuth(req)) return json(401, { error: "auth" });
   const u = new URL(req.url), op = u.searchParams.get("op"), order = u.searchParams.get("order") || "";
@@ -26,7 +28,13 @@ export default async req => {
       const r = await store().get(b.key, { type: "json" });
       if (r && ["received", "dispatch_failed", "send_failed", "ai_failed"].includes(r.status)) out.push({ order: r.order_id, status: r.status, received_at: r.received_at });
     }
-    return json(200, { pending: out });
+    // Paid gift cards whose email never went out.
+    const gifts = [];
+    for (const b of (await store().list({ prefix: "gift/" })).blobs) {
+      const g = await store().get(b.key, { type: "json" });
+      if (g && g.status === "paid") gifts.push({ order: b.key.slice(5), status: g.status, paid_at: g.paid_at });
+    }
+    return json(200, { pending: out, gifts });
   }
   if (op === "status" && req.method === "POST") {
     const patch = await req.json().catch(() => ({}));
@@ -42,6 +50,15 @@ export default async req => {
     const buf = await store().get("pdf/" + order, { type: "arrayBuffer" });
     if (!buf) return json(404, { error: "not_found" });
     return new Response(buf, { headers: { "content-type": "application/pdf", "cache-control": "no-store" } });
+  }
+  if (op === "gift") {
+    const g = await getGift(order);
+    if (!g || g.status === "created") return json(404, { error: "not_found" });
+    return json(200, { ...g, order, link: giftLink(order, g.plan_lang, sign(order, g.plan_lang)) });
+  }
+  if (op === "giftstatus" && req.method === "POST") {
+    const patch = await req.json().catch(() => ({}));
+    return json(200, await saveGift(order, patch));
   }
   if (op === "links") {
     return json(200, { send: actionLink(order, "send"), regenerate: actionLink(order, "regenerate") });
