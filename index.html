@@ -23,7 +23,7 @@ n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
 n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
 document,'script','https://connect.facebook.net/en_US/fbevents.js');
-fbq('init','1867773444384467');fbq('track','PageView');
+fbq('init','1867773444384467');fbq('track','PageView');fbq('track','ViewContent',{content_name:'PupFlow 90-day plan',content_type:'product',value:19,currency:'USD'});
 </script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1867773444384467&ev=PageView&noscript=1"></noscript>
 <!-- End Meta Pixel -->
@@ -1208,7 +1208,7 @@ const CONFIG = {
   const heroInput = $("#dogname"), simInput = $("#simname");
   heroInput.addEventListener("input", () => { dogName = clean(heroInput.value); simInput.value = dogName || "Bella"; rotLock(); applyName(); });
   simInput.addEventListener("input", () => { dogName = clean(simInput.value); heroInput.value = dogName; rotLock(); applyName(); });
-  $("#heroForm").addEventListener("submit", e => { e.preventDefault(); $("#try").scrollIntoView({ behavior: reduce ? "auto" : "smooth" }); });
+  $("#heroForm").addEventListener("submit", e => { e.preventDefault(); try { fbq("trackCustom", "FreePreview"); } catch (err) {} $("#try").scrollIntoView({ behavior: reduce ? "auto" : "smooth" }); });
 
   /* ---------- Rotating headline ---------- */
   // What the plan is built around. Only the part that differs from the next phrase is retyped.
@@ -1435,6 +1435,7 @@ const CONFIG = {
     try { const u = new URL(CONFIG.PAYPAL_URL); u.searchParams.set("plan_lang", pl); return u.toString(); } catch (e) { return CONFIG.PAYPAL_URL; }
   }
   function openPick() {
+    try { fbq("track", "AddToCart", { content_name: "PupFlow 90-day plan", content_type: "product", value: 19, currency: "USD" }); } catch (e) {}
     // The page language's option goes first and is highlighted, but both are always offered.
     const first = $(`.pick-opt[data-plan="${lang}"]`);
     $(".pick-opts").prepend(first);
