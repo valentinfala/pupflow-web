@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="A personalized 90-day training and feeding plan for your dog, built from your answers. One-time payment, delivered by email. In English or Spanish.">
+<meta name="description" content="A personalized 90-day training and feeding plan for your dog, built from your answers. One-time payment, no subscription. Delivered by email. In English or Spanish.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="PupFlow: a 90-day plan written for your dog">
-<meta property="og:description" content="A personalized 90-day training and feeding plan for your dog, built from your answers. One-time payment, delivered by email. In English or Spanish.">
+<meta property="og:description" content="A personalized 90-day training and feeding plan for your dog, built from your answers. One-time payment, no subscription. Delivered by email. In English or Spanish.">
 <meta property="og:image" content="https://pupflowplan.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -1235,8 +1235,8 @@ const CONFIG = {
     if (promo) { wb.textContent = was; bd.textContent = es() ? "🚀 Promo de lanzamiento" : "🚀 Launch promo"; }
     $("#mbarSmall").textContent = promo ? (es() ? "Promo de lanzamiento" : "Launch promo") : (es() ? "pago único" : "one-time payment");
     $("#promoBar").innerHTML = promo
-      ? (es() ? `🚀 <b>Promo de lanzamiento:</b> tu plan a <b>${p}</b> <s class="was">${was}</s> · Pago único`
-              : `🚀 <b>Launch promo:</b> your plan for <b>${p}</b> <s class="was">${was}</s> · One-time payment`)
+      ? (es() ? `🚀 <b>Promo de lanzamiento:</b> tu plan a <b>${p}</b> <s class="was">${was}</s> · Pago único, sin suscripción`
+              : `🚀 <b>Launch promo:</b> your plan for <b>${p}</b> <s class="was">${was}</s> · One-time payment, no subscription`)
       : (es() ? "Planes para <b>cachorros, adultos y perros mayores</b> · Ningún perro es igual. Ningún plan tampoco."
               : "Plans for <b>puppies, adults and seniors</b> · No two dogs are alike. Neither are our plans.");
   }
