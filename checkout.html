@@ -17,6 +17,7 @@ body{margin:0;background:#fff;color:var(--ink);font:16px/1.55 system-ui,-apple-s
 .lang button[aria-pressed=true]{background:var(--teal);color:#fff}
 .test{display:none;background:#FFE7CF;color:#7a3f00;text-align:center;font-size:14px;font-weight:700;padding:8px 16px}
 .test.on{display:block}
+.chg{background:none;border:0;padding:0 0 0 6px;font:inherit;font-size:13px;color:var(--deep);text-decoration:underline;cursor:pointer;opacity:.75}
 main{max-width:1040px;margin:0 auto;padding:16px 16px 64px;display:grid;gap:28px}
 @media(min-width:860px){main{grid-template-columns:1.05fr .95fr;align-items:start;padding-top:36px}}
 h1{font-size:clamp(26px,4vw,36px);line-height:1.15;margin:0 0 10px;color:var(--deep)}
@@ -60,7 +61,7 @@ fbq('init','1867773444384467');fbq('track','PageView');
     <div class="card sum">
       <div class="promo" id="promo" hidden></div>
       <div class="row"><span data-t="item"></span><span id="price1"></span></div>
-      <div class="row"><span data-t="planlang"></span><span id="pl"></span></div>
+      <div class="row"><span data-t="planlang"></span><span><span id="pl"></span> <button type="button" class="chg" id="plChg"></button></span></div>
       <div class="row"><span data-t="total"></span><span id="price2"></span></div>
       <ul><li data-t="b1"></li><li data-t="b2"></li><li data-t="b3"></li></ul>
     </div>
@@ -77,7 +78,7 @@ fbq('init','1867773444384467');fbq('track','PageView');
 <script>
 const T = {
   en: { h1: "One step left: your payment", lead: "Pay once with PayPal or card. Right after, you answer 15 quick questions about your dog and your plan arrives by email.",
-        item: "PupFlow 90-day plan", promo: "🚀 Launch promo", planlang: "Plan language", total: "Total", langName: { en: "English", es: "Spanish" },
+        item: "PupFlow 90-day plan", promo: "🚀 Launch promo", planlang: "Plan language", chg: { en: "Plan in Spanish?", es: "Plan in English?" }, total: "Total", langName: { en: "English", es: "Spanish" },
         b1: "Personalized PDF built from your answers", b2: "Feeding, daily routine and 2 training programs", b3: "One-time payment. No subscription.",
         pay: "Choose how to pay", safe: "Secure payment processed by PayPal. We never see your card details.",
         rf: "Digital product. All sales final, except as described in our", rfa: "Refund Policy", back: "← Back to PupFlow",
@@ -85,7 +86,7 @@ const T = {
         off: "Checkout is being set up. Please try again soon.", fail: "We couldn't complete the payment. You were not charged. Please try again.",
         notPaid: "PayPal didn't confirm the payment. If you were charged, write to us and we'll fix it right away.", ok: "Payment confirmed! Taking you to the form…" },
   es: { h1: "Último paso: tu pago", lead: "Pagas una sola vez con PayPal o tarjeta. Enseguida respondes 15 preguntas rápidas sobre tu perro y tu plan te llega por email.",
-        item: "Plan PupFlow de 90 días", promo: "🚀 Promo de lanzamiento", planlang: "Idioma del plan", total: "Total", langName: { en: "Inglés", es: "Español" },
+        item: "Plan PupFlow de 90 días", promo: "🚀 Promo de lanzamiento", planlang: "Idioma del plan", chg: { en: "¿Plan en español?", es: "¿Plan en inglés?" }, total: "Total", langName: { en: "Inglés", es: "Español" },
         b1: "PDF personalizado armado con tus respuestas", b2: "Alimentación, rutina diaria y 2 programas de entrenamiento", b3: "Pago único. Sin suscripción.",
         pay: "Elige cómo pagar", safe: "Pago seguro procesado por PayPal. Nunca vemos los datos de tu tarjeta.",
         rf: "Producto digital. Sin reembolsos, salvo los casos de nuestra", rfa: "Política de reembolso", back: "← Volver a PupFlow",
@@ -95,7 +96,7 @@ const T = {
 };
 const q = new URLSearchParams(location.search);
 let lang = q.get("lang") === "es" || q.get("lang") === "en" ? q.get("lang") : (/^es\b/i.test(navigator.language || "") ? "es" : "en");
-const planLang = q.get("plan_lang") === "es" ? "es" : (q.get("plan_lang") === "en" ? "en" : lang);
+let planLang = q.get("plan_lang") === "es" ? "es" : (q.get("plan_lang") === "en" ? "en" : lang);
 let price = "19.00", listPrice = "29.00";
 const $ = id => document.getElementById(id);
 function msg(kind, text) { const m = $("msg"); m.className = "msg on " + kind; m.textContent = text; }
@@ -103,6 +104,7 @@ function paint() {
   const t = T[lang]; document.documentElement.lang = lang;
   document.querySelectorAll("[data-t]").forEach(e => e.textContent = t[e.dataset.t]);
   $("pl").textContent = t.langName[planLang];
+  $("plChg").textContent = t.chg[planLang];
   const fmt = v => "US$" + v.replace(/\.00$/, "");
   const promo = parseFloat(listPrice) > parseFloat(price);
   $("price1").innerHTML = (promo ? `<s style="opacity:.6;margin-right:6px">${fmt(listPrice)}</s>` : "") + fmt(price);
@@ -113,6 +115,13 @@ function paint() {
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.l === lang));
 }
 document.querySelectorAll(".lang button").forEach(b => b.onclick = () => { lang = b.dataset.l; try { localStorage.setItem("pf-lang", lang); } catch (e) {} paint(); });
+$("plChg").onclick = () => {
+  planLang = planLang === "es" ? "en" : "es";
+  try { localStorage.setItem("pf-plan-lang", planLang); } catch (e) {}
+  const u = new URL(location.href); u.searchParams.set("plan_lang", planLang); history.replaceState(null, "", u);
+  try { fbq("trackCustom", "PlanLangChange", { plan_lang: planLang }); } catch (e) {}
+  paint();
+};
 paint();
 
 async function post(fn, body) {
@@ -137,6 +146,8 @@ function loadSdk(clientId) {
   $("pp").textContent = "";
   paypal.Buttons({
     style: { layout: "vertical", shape: "pill", label: "pay" },
+    onClick: d => { try { fbq("trackCustom", "PayClick", { method: (d && d.fundingSource) || "paypal" }); } catch (e) {} },
+    onCancel: () => { try { fbq("trackCustom", "PayCancel"); } catch (e) {} },
     createOrder: async () => {
       const d = await post("create-order", { plan_lang: planLang });
       if (!d.id) { msg("err", T[lang].fail); throw new Error("create"); }
@@ -156,7 +167,7 @@ function loadSdk(clientId) {
       try { fbq("track", "Purchase", { value: Number(d.value) || 19, currency: "USD", content_name: "PupFlow 90-day plan", content_type: "product" }, { eventID: d.order }); } catch (e) {}
       setTimeout(() => location.assign("form.html?" + u.toString()), 700);
     },
-    onError: () => msg("err", T[lang].fail)
+    onError: () => { try { fbq("trackCustom", "PayError"); } catch (e) {} msg("err", T[lang].fail); }
   }).render("#pp");
 })();
 </script>

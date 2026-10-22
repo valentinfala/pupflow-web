@@ -1515,7 +1515,6 @@ const CONFIG = {
     try { const u = new URL(CONFIG.PAYPAL_URL); u.searchParams.set("plan_lang", pl); return u.toString(); } catch (e) { return CONFIG.PAYPAL_URL; }
   }
   function openPick() {
-    try { fbq("track", "AddToCart", { content_name: "PupFlow 90-day plan", content_type: "product", value: 19, currency: "USD" }); } catch (e) {}
     // The page language's option goes first and is highlighted, but both are always offered.
     const first = $(`.pick-opt[data-plan="${lang}"]`);
     $(".pick-opts").prepend(first);
@@ -1536,11 +1535,19 @@ const CONFIG = {
                : `Checkout isn't connected yet (plan in ${pl === "es" ? "Spanish" : "English"}). Add the PayPal links in CONFIG.`);
   }));
   // Every "Unlock" button, including the ones drawn later in the preview, opens the picker
+  // Every "Unlock" button goes straight to checkout in the page language (the plan language can be
+  // changed on the checkout page). The old language picker (#pick) is kept only as a fallback.
+  function goCheckout() {
+    try { fbq("track", "AddToCart", { content_name: "PupFlow 90-day plan", content_type: "product", value: 19, currency: "USD" }); } catch (e) {}
+    const url = checkoutUrl(lang);
+    if (!url) { openPick(); return; }
+    setTimeout(() => location.assign(url), 220);   // short pause so the pixel event leaves before the page changes
+  }
   document.addEventListener("click", e => {
     const a = e.target.closest(".js-buy"); if (!a) return;
     e.preventDefault();
     burst(e.clientX, e.clientY);
-    openPick();
+    goCheckout();
   });
 
   /* ---------- Nav shadow + mobile bar ---------- */
