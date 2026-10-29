@@ -169,11 +169,18 @@ function loadSdk(clientId) {
   if (!cfg.clientId) { $("pp").textContent = ""; msg("err", T[lang].off); return; }
   try { await loadSdk(cfg.clientId); } catch (e) { $("pp").textContent = ""; msg("err", T[lang].off); return; }
   $("pp").textContent = "";
+  let payClicked = false;
+  function payClick(method) {
+    if (payClicked) return; payClicked = true;
+    try { fbq("trackCustom", "PayClick", { method: method || "paypal" }); } catch (e) {}
+    try { clarity("event", "pay_click"); } catch (e) {}
+  }
   paypal.Buttons({
     style: { layout: "vertical", shape: "pill", label: "pay" },
-    onClick: d => { try { fbq("trackCustom", "PayClick", { method: (d && d.fundingSource) || "paypal" }); } catch (e) {} try { clarity("event", "pay_click"); } catch (e) {} },
+    onClick: d => payClick(d && d.fundingSource),
     onCancel: () => { try { fbq("trackCustom", "PayCancel"); } catch (e) {} },
-    createOrder: async () => {
+    createOrder: async (data) => {
+      payClick(data && data.paymentSource);   // backup in case onClick did not fire
       const d = await post("create-order", { plan_lang: planLang });
       if (!d.id) { msg("err", T[lang].fail); throw new Error("create"); }
       return d.id;
