@@ -121,7 +121,7 @@
       </div>
       <div class="pv-f"><span>${t.probs} <em class="pv-count">${S.problems.length}/2</em></span><div class="pv-chips">${ORDER.map(k => opt("problems", k, CHIP[lang][k])).join("")}</div></div>
       <p class="pv-err" id="pvErr" hidden>${t.err}</p>
-      <button type="submit" class="btn block pv-go">✨ ${fill(S.dog_name.trim() ? t.go : t.goNo)}</button>`;
+      <button type="submit" class="btn block pv-go">${fill(S.dog_name.trim() ? t.go : t.goNo)}</button>`;
   }
   function renderOut() {
     const t = T[lang], out = $("pvOut");
@@ -166,7 +166,7 @@
     if (u) { start(); S.unit = u.dataset.u; renderForm(); }
   });
   document.addEventListener("input", e => {
-    if (e.target.id === "pvName") { start(); S.dog_name = e.target.value; const b = document.querySelector(".pv-go"); if (b) b.textContent = "✨ " + fill(S.dog_name.trim() ? T[lang].go : T[lang].goNo); }
+    if (e.target.id === "pvName") { start(); S.dog_name = e.target.value; const b = document.querySelector(".pv-go"); if (b) b.textContent = fill(S.dog_name.trim() ? T[lang].go : T[lang].goNo); }
     if (e.target.id === "pvW") { start(); S.weight = e.target.value; }
   });
   document.addEventListener("submit", e => {

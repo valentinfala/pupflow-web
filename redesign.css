@@ -1,0 +1,177 @@
+/* PupFlow landing redesign layer (20/11/2026).
+   Same content; more energy. One signature moment: the hero load sequence
+   (headline scribble + Chicha sticker + plan card flying in). Everything else is
+   chunky "dog-toy" UI: pressable buttons, a moving benefits ticker, tinted cards. */
+:root{
+  --sun:#FFC94A; --sun-soft:#FFF1C7; --orange-edge:#C8661C; --teal-night:#0F3E44;
+  --paw:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 24 24'%3E%3Cg fill='%23F28C38' fill-opacity='.07' transform='rotate(-18 12 12) scale(.5) translate(12 12)'%3E%3Cellipse cx='6' cy='10' rx='2.2' ry='2.8'/%3E%3Cellipse cx='18' cy='10' rx='2.2' ry='2.8'/%3E%3Cellipse cx='9.5' cy='5.5' rx='2.1' ry='2.7'/%3E%3Cellipse cx='14.5' cy='5.5' rx='2.1' ry='2.7'/%3E%3Cpath d='M12 11c-3.2 0-6 3.6-6 6.2 0 2 1.6 2.8 3.2 2.8 1.2 0 1.8-.6 2.8-.6s1.6.6 2.8.6c1.6 0 3.2-.8 3.2-2.8C18 14.6 15.2 11 12 11z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* ---------- buttons: chunky, pressable, with an arrow chip ---------- */
+.btn{position:relative;overflow:hidden;isolation:isolate;
+  background:linear-gradient(180deg,#F9A85A 0%,var(--orange) 55%,#EE7F27 100%);
+  box-shadow:0 6px 0 var(--orange-edge),0 18px 30px -12px rgba(242,140,56,.75);
+  font:800 18.5px/1.15 var(--display);letter-spacing:-.005em;padding:19px 22px 19px 26px;border-radius:20px;
+  transition:transform .12s ease,box-shadow .12s ease,filter .2s}
+.btn:hover{transform:translateY(-2px);filter:saturate(1.08);box-shadow:0 8px 0 var(--orange-edge),0 22px 34px -12px rgba(242,140,56,.8)}
+.btn:active{transform:translateY(5px);box-shadow:0 1px 0 var(--orange-edge),0 8px 16px -10px rgba(242,140,56,.7)}
+.btn:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+.btn::after{content:"";flex:none;width:30px;height:30px;border-radius:50%;margin-left:4px;
+  background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E07A22' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h13M13 6l6 6-6 6'/%3E%3C/svg%3E") center/16px no-repeat;
+  transition:transform .2s}
+.btn:hover::after{transform:translateX(3px)}
+.btn .p{border-left-color:rgba(255,255,255,.5)}
+.btn > svg{display:none}                         /* lock icons out: the arrow says "go" */
+.btn-ghost{background:#fff;color:var(--teal-deep);box-shadow:0 5px 0 #CFE0E0,inset 0 0 0 2px var(--teal)}
+.btn-ghost:hover{box-shadow:0 7px 0 #CFE0E0,inset 0 0 0 2px var(--teal)}
+.btn-ghost::after{background-color:var(--teal);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h13M13 6l6 6-6 6'/%3E%3C/svg%3E")}
+.btn.shine::before{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;z-index:-1;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-18deg);
+  animation:pf-shine 4.5s ease-in-out 2.2s infinite}
+@keyframes pf-shine{0%,70%{left:-60%}100%{left:130%}}
+.nav .navcta{padding:12px 14px 12px 18px;font-size:15px;border-radius:16px;box-shadow:0 4px 0 var(--orange-edge)}
+.nav .navcta::after{width:24px;height:24px;background-size:13px}
+.secondary{color:var(--teal-deep);text-decoration:none;border-bottom:2px solid var(--sun);display:table;margin:14px auto 0;padding-bottom:2px;width:auto}
+.secondary:hover{border-bottom-color:var(--orange)}
+
+/* ---------- eyebrows: sentence case tag, not a tracked-out label ---------- */
+.eyebrow{font:800 14px/1 var(--body);letter-spacing:0;text-transform:none;color:var(--teal-deep);background:var(--sun-soft);padding:8px 12px;border-radius:999px}
+.eyebrow::before{width:8px;height:8px;border-radius:50%;background:var(--orange)}
+
+/* ---------- headings get heavier and tighter ---------- */
+.h2{font-weight:800;letter-spacing:-.03em}
+.h2 em{color:var(--orange)}
+
+/* ---------- promo bar ---------- */
+.promo{background:var(--teal-night);font-size:14.5px}
+.promo b{color:var(--sun)}
+
+/* ---------- hero: the signature moment ---------- */
+.hero{background:var(--paw),radial-gradient(120% 70% at 85% 0%,#FFE9D2 0%,transparent 60%),linear-gradient(180deg,#FFFBF6,var(--cream));background-size:120px,auto,auto}
+.hero h1{font-weight:800;letter-spacing:-.035em;line-height:.98}
+.hero h1 .mk{display:inline-block;white-space:normal}
+.hero h1 .mk::after{left:-1%;right:-1%;bottom:-.14em;height:.32em;z-index:-1;border-radius:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 24' preserveAspectRatio='none'%3E%3Cpath d='M4 16 C 60 6, 110 6, 160 13 S 250 20, 296 8' fill='none' stroke='%23FFC94A' stroke-width='10' stroke-linecap='round'/%3E%3C/svg%3E") center/100% 100% no-repeat;
+  clip-path:inset(0 100% 0 0);animation:pf-draw .7s cubic-bezier(.6,.1,.3,1) .65s forwards}
+@keyframes pf-draw{to{clip-path:inset(0 0 0 0)}}
+.hero .copy h1 > span{display:inline-block;animation:pf-rise .6s cubic-bezier(.2,.8,.2,1) both}
+.hero .copy h1 > span.mk{animation-delay:.18s}
+@keyframes pf-rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+.photo .frame{border-radius:32px;border:6px solid #fff;transform:rotate(-2.5deg);box-shadow:0 34px 60px -30px rgba(15,62,68,.65);
+  animation:pf-sticker .7s cubic-bezier(.2,1.3,.4,1) .15s both}
+@keyframes pf-sticker{from{opacity:0;transform:rotate(-9deg) scale(.86)}to{opacity:1;transform:rotate(-2.5deg) scale(1)}}
+.plancard{animation:pf-fly .8s cubic-bezier(.2,1.2,.35,1) .55s both}
+@keyframes pf-fly{from{opacity:0;transform:translate(70px,40px) rotate(18deg)}to{opacity:1;transform:rotate(5deg)}}
+.tag-real{animation:pf-pop .45s cubic-bezier(.2,1.6,.4,1) 1s both;background:#fff;font-weight:800}
+@keyframes pf-pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+.caption{background:var(--teal-night);border-radius:16px}
+
+.chips span{background:#fff;border:0;box-shadow:0 3px 0 #EADBC8}
+.buy{border:0;border-radius:28px;box-shadow:0 2px 0 #F3DFC8,0 30px 60px -36px rgba(201,102,26,.6);position:relative}
+.price .now{font-size:58px;letter-spacing:-.04em;color:var(--teal-night)}
+.price .save{background:var(--sun);color:var(--teal-night)}
+.assure svg{color:var(--teal)}
+
+/* ---------- benefits ticker ---------- */
+.strip{padding:0;overflow:hidden;background:var(--teal-night)}
+.strip .wrap{max-width:none;padding:0}
+.strip ul{display:flex;width:max-content;gap:0;grid-template-columns:none;animation:pf-ticker 28s linear infinite}
+.strip li{padding:18px 26px;font:800 16px/1 var(--display);white-space:nowrap}
+.strip svg{color:var(--sun);width:22px;height:22px}
+.strip:hover ul{animation-play-state:paused}
+@keyframes pf-ticker{to{transform:translateX(-50%)}}
+
+/* ---------- free preview: dark block so it stands out ---------- */
+.pv{background:var(--teal-night) var(--paw);background-size:120px;color:#fff}
+.pv .h2{color:#fff}
+.pv .h2 em{color:var(--sun)}
+.pv .lead{color:rgba(255,255,255,.82)}
+.pv .eyebrow{background:var(--sun);color:var(--teal-night)}
+.pv-form{border:0;border-radius:28px;color:var(--ink);box-shadow:0 30px 60px -30px rgba(0,0,0,.55)}
+.pv-chip{border-width:2px;transition:transform .12s}
+.pv-chip:active{transform:scale(.95)}
+.pv-chip.on{background:var(--orange);border-color:var(--orange);box-shadow:0 3px 0 var(--orange-edge)}
+.pv-sheet{border:0;border-radius:28px;color:var(--ink)}
+.pv-out.show .pv-sheet{animation:pf-sheet .55s cubic-bezier(.2,1.1,.3,1) both}
+@keyframes pf-sheet{from{opacity:0;transform:translateY(24px) rotate(1.5deg)}to{opacity:1;transform:none}}
+.pv-top{background:var(--orange);color:#fff}
+.pv-top i{background:var(--teal-night)}
+.pv-big{color:var(--orange-dark)}
+
+/* ---------- problems: tinted toy-box cards ---------- */
+.prob{border:0;border-radius:22px;padding:18px 16px;transition:transform .15s}
+.prob:nth-child(6n+1){background:#FFF1E3}.prob:nth-child(6n+2){background:#E7F3F2}.prob:nth-child(6n+3){background:var(--sun-soft)}
+.prob:nth-child(6n+4){background:#FCE8EC}.prob:nth-child(6n+5){background:#E9F0FB}.prob:nth-child(6n+6){background:#EEF6E6}
+.prob .em{background:#fff;width:48px;height:48px;border-radius:16px;font-size:24px;box-shadow:0 3px 0 rgba(0,0,0,.06)}
+.prob:hover{transform:rotate(-1deg) translateY(-2px)}
+.prob:hover .em{animation:pf-wiggle .5s}
+@keyframes pf-wiggle{25%{transform:rotate(-12deg)}75%{transform:rotate(10deg)}}
+.probs-note{background:var(--sun-soft);border-radius:18px}
+
+/* ---------- Chicha story ---------- */
+.story{background:var(--cream) var(--paw);background-size:120px}
+.story-pics figure{border:6px solid #fff;border-radius:26px}
+.story-pics figure:nth-child(1){transform:rotate(-2deg)}
+.story-pics figure:nth-child(2){transform:rotate(2.5deg)}
+.story-pics figcaption{background:var(--sun);font-weight:800}
+
+/* ---------- what you get: pages spread out once when scrolled into view ---------- */
+.pages img{transition:transform .8s cubic-bezier(.2,1.2,.35,1),left .8s cubic-bezier(.2,1.2,.35,1),right .8s cubic-bezier(.2,1.2,.35,1)}
+.pages.stack img:nth-child(1),.pages.stack img:nth-child(3){left:22%;right:auto;transform:rotate(0)}
+.feat div{border:0;background:#F7FAFA;border-radius:20px}
+.feat .n{background:var(--teal-night);border-radius:12px}
+
+/* ---------- how it works ---------- */
+.how{background:var(--teal-night);color:#fff}
+.how .h2{color:#fff}
+.how .h2 em{color:var(--sun)}
+.how .eyebrow{background:var(--sun);color:var(--teal-night)}
+.step{border-radius:24px;color:var(--ink)}
+.step .i{background:var(--orange);border-radius:16px;box-shadow:0 4px 0 var(--orange-edge)}
+.step small{color:var(--orange-dark)}
+
+/* ---------- compare ---------- */
+.cmp .col{border:0;background:#F4F7F7;border-radius:24px}
+.cmp .us{background:var(--teal-night);transform:scale(1.02)}
+.cmp .us .best{background:var(--sun);color:var(--teal-night)}
+.cmp .us li::before{color:var(--sun)}
+
+/* ---------- guarantee + faq ---------- */
+.guar{border:0;background:var(--sun-soft);border-radius:26px}
+.seal{background:var(--orange);box-shadow:0 5px 0 var(--orange-edge),inset 0 0 0 5px rgba(255,255,255,.35);transform:rotate(-8deg)}
+.faq details{border:0;background:#F4F7F7;border-radius:18px}
+.faq details[open]{background:#fff;box-shadow:inset 0 0 0 2px var(--teal)}
+
+/* ---------- final call ---------- */
+.final{background:var(--orange) var(--paw);background-size:120px;position:relative}
+.final h2{color:#fff;letter-spacing:-.03em}
+.final p,.final .small{color:#fff;opacity:.92}
+.final img.av{border-color:var(--sun)}
+.final .btn{background:#fff;color:var(--teal-night);box-shadow:0 6px 0 var(--teal-night),0 22px 34px -14px rgba(15,62,68,.6)}
+.final .btn:active{box-shadow:0 1px 0 var(--teal-night)}
+.final .btn .p{border-left-color:rgba(15,62,68,.25)}
+.final .btn::after{background-color:var(--orange);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h13M13 6l6 6-6 6'/%3E%3C/svg%3E")}
+footer{background:var(--teal-night)}
+
+/* ---------- sticky mobile bar ---------- */
+.mbar{background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:0;box-shadow:0 -12px 30px -16px rgba(15,62,68,.4)}
+.mbar .btn{padding:15px 14px 15px 18px;font-size:17px;border-radius:18px}
+.mbar .pp b{color:var(--teal-night)}
+
+@media (min-width:861px){
+  .hero h1{font-size:clamp(50px,5.4vw,74px)}
+  .hero h1 .mk{white-space:nowrap}
+  .photo .frame{border-width:8px}
+}
+@media (max-width:860px){
+  .hero h1{font-size:clamp(40px,11.5vw,52px)}
+  .price .now{font-size:52px}
+  .prob{flex-direction:column;align-items:flex-start;gap:10px}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero h1 .mk::after{clip-path:none;animation:none}
+  .hero .copy h1 > span,.photo .frame,.plancard,.tag-real,.pv-out.show .pv-sheet{animation:none}
+  .strip ul{animation:none;flex-wrap:wrap;width:auto}
+  .btn.shine::before{display:none}
+  .pages.stack img{transition:none}
+}
