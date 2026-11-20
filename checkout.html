@@ -121,7 +121,7 @@ const T = {
 const q = new URLSearchParams(location.search);
 let lang = q.get("lang") === "es" || q.get("lang") === "en" ? q.get("lang") : (/^es\b/i.test(navigator.language || "") ? "es" : "en");
 let planLang = q.get("plan_lang") === "es" ? "es" : (q.get("plan_lang") === "en" ? "en" : lang);
-let price = "19.00", listPrice = "29.00";
+let price = "9.00", listPrice = "19.00";
 const $ = id => document.getElementById(id);
 function msg(kind, text) { const m = $("msg"); m.className = "msg on " + kind; m.textContent = text; }
 function paint() {

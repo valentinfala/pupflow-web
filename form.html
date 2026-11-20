@@ -366,6 +366,18 @@ const blank = () => ({photo:"",photo_social:false,showcase:false,dog_name:"",sex
   activity:"",housing:"",household:[],time_per_day_min:"",problems:[],problems_other:"",known_cues:[],vet_condition:"",vet_condition_detail:"",
   bite_history:"",owner_first_name:"",email:(PURCHASE&&PURCHASE.email)||"",consent:false});
 let A = blank();
+// Answers from the free preview on the landing (same device) pre-fill the matching questions.
+try {
+  const pv = JSON.parse(localStorage.getItem("pf-preview") || "null");
+  if (pv && pv.s && !/[?&]gift=1/.test(location.search)) {
+    const v = pv.s;
+    if (v.dog_name) A.dog_name = String(v.dog_name).slice(0, 30);
+    if (v.sex === "male" || v.sex === "female") A.sex = v.sex;
+    if (v.weight && +v.weight > 0) { A.weight = String(v.weight); A.weight_unit = v.unit === "kg" ? "kg" : "lb"; }
+    if (["low", "medium", "high"].includes(v.activity)) A.activity = v.activity;
+    if (Array.isArray(v.problems)) A.problems = v.problems.filter(x => typeof x === "string").slice(0, 2);
+  }
+} catch (e) {}
 // 3rd paid program: inert here; the website build (build_site.py) replaces it with the real offer.
 
 // 3rd program for US$9 (website only). Paid state lives on the server; localStorage only remembers it on this device.

@@ -224,7 +224,7 @@ const q = new URLSearchParams(location.search);
 let saved = null; try { saved = localStorage.getItem("pf-lang"); } catch (e) {}
 let lang = q.get("lang") === "es" || q.get("lang") === "en" ? q.get("lang") : (saved === "es" || saved === "en" ? saved : (/^es\b/i.test(navigator.language || "") ? "es" : "en"));
 const G = { occasion: "", plan_lang: lang, addon: false };
-let price = "19.00", listPrice = "29.00", addonPrice = "9.00";
+let price = "9.00", listPrice = "19.00", addonPrice = "9.00";
 const $ = id => document.getElementById(id);
 const t = k => T[lang][k];
 const usd = v => "US$" + (Number(v) % 1 ? Number(v).toFixed(2) : String(Number(v)));
