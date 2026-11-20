@@ -326,6 +326,7 @@ dialog::backdrop{background:rgba(15,40,44,.6);backdrop-filter:blur(3px)}
 .giftline a{color:var(--teal);font-weight:700}
 .faq .rf p{margin:0 0 12px}
 </style>
+<link rel="stylesheet" href="redesign.css">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -528,6 +529,21 @@ dialog::backdrop{background:rgba(15,40,44,.6);backdrop-filter:blur(3px)}
     <a class="btn block js-buy" href="checkout.html"><svg><use href="#lock"/></svg><span data-i="cta4">Get my dog&#39;s plan</span><span class="p"><span class=pn>$9</span></span></a></div>
 </dialog>
 
+<script>
+/* redesign: seamless benefits ticker + plan pages that spread once when seen */
+(() => {
+  const ul = document.querySelector(".strip ul");
+  if (ul) [...ul.children].forEach(li => { const c = li.cloneNode(true); c.setAttribute("aria-hidden", "true"); ul.append(c); });
+  const pg = document.querySelector(".pages");
+  if (pg && "IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    pg.classList.add("stack");
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { setTimeout(() => pg.classList.remove("stack"), 150); io.disconnect(); } }), { threshold: .2 });
+    io.observe(pg);
+    setTimeout(() => pg.classList.remove("stack"), 9000);   // never leave them stacked
+  }
+  const mb = document.querySelector(".mbar .btn"); if (mb) mb.classList.add("shine");
+})();
+</script>
 <script src="preview.js"></script>
 <script>
 (() => {
