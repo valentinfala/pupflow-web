@@ -241,6 +241,8 @@ dialog::backdrop{background:rgba(15,40,44,.6);backdrop-filter:blur(3px)}
 .pv{background:linear-gradient(180deg,var(--cream),#fff 70%)}
 .pv-head{max-width:720px}
 .pv-grid{display:grid;gap:22px;margin-top:26px}
+.pv-grid>*{min-width:0}
+.pv-top{flex-wrap:wrap}
 .pv-form{background:#fff;border:1.5px solid #F6DCC2;border-radius:var(--r);padding:20px;box-shadow:0 18px 40px -30px rgba(201,102,26,.5);display:grid;gap:16px}
 .pv-row.two{display:grid;gap:16px}
 .pv-f{display:grid;gap:8px}
@@ -274,10 +276,8 @@ dialog::backdrop{background:rgba(15,40,44,.6);backdrop-filter:blur(3px)}
 .pv-prog li{margin-bottom:6px}
 .pv-lock ul{margin:0;padding-left:0;list-style:none;font-size:15px;display:grid;gap:6px}
 .pv-lock li::before{content:"🔒 ";font-size:12px}
-.pv-blur{display:grid;gap:8px;margin-top:12px;filter:blur(3px);opacity:.6}
-.pv-blur span{height:10px;border-radius:6px;background:linear-gradient(90deg,#d9e7e7,#eef4f4)}
-.pv-blur span:nth-child(2){width:80%}.pv-blur span:nth-child(3){width:92%}.pv-blur span:nth-child(4){width:60%}
-.pv-unlock{margin:18px 20px 8px;width:calc(100% - 40px)}
+.pv-sheet .pv-unlock{display:flex;width:auto;margin:18px 16px 8px;padding:16px 18px;font-size:16.5px;line-height:1.2;text-align:left}
+.pv-sheet .pv-unlock .p{flex:none}
 .pv-note{text-align:center;color:var(--soft);font-size:13.5px;margin:0 20px 18px}
 @media (min-width:861px){
   .pv-grid{grid-template-columns:1fr 1fr;align-items:start}

@@ -43,7 +43,7 @@
       locked: "En el plan completo de {n}",
       l1: "Rutina diaria hora por hora armada con tus minutos", l2: "Los pasos 3 a 6 de cada programa y qué hacer si no funciona",
       l3: "Porciones exactas para su alimento", l4: "Metas a 30, 60 y 90 días y un planificador para imprimir",
-      unlock: "Desbloquear el plan completo de {n}", note: "Pago único · Garantía de 14 días · Tus respuestas quedan guardadas",
+      unlock: "Desbloquear el plan de {n}", note: "Pago único · Garantía de 14 días · Tus respuestas quedan guardadas",
       vet: "¿Condición médica o dieta veterinaria? Tu plan completo deja las calorías en manos de tu veterinario.",
     },
   };
@@ -140,8 +140,7 @@
           <p>${S.age === "p4" || S.age === "p12" ? meals : (k ? meals : "")}</p><small>${t.feedNote}</small></div>
         <div class="pv-sec"><h4>🐾 ${fill(t.week)}</h4>${steps}</div>
         <div class="pv-sec pv-lock"><h4>🔒 ${fill(t.locked)}</h4>
-          <ul>${["l1", "l2", "l3", "l4"].map(x => `<li>${fill(t[x])}</li>`).join("")}</ul>
-          <div class="pv-blur" aria-hidden="true"><span></span><span></span><span></span><span></span></div></div>
+          <ul>${["l1", "l2", "l3", "l4"].map(x => `<li>${fill(t[x])}</li>`).join("")}</ul></div>
         <a class="btn block js-buy pv-unlock" href="checkout.html"><svg><use href="#lock"/></svg>${fill(t.unlock)}<span class="p"><span class=pn>$9</span></span></a>
         <p class="pv-note">${t.note}</p>
       </div>`;
