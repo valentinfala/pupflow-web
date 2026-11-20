@@ -7,12 +7,12 @@
 //   MAKE_WEBHOOK_URL      where finished forms are sent (Make/Zapier). Optional while testing.
 //   PRICE_USD             optional, defaults to "9.00" (launch promo since 20/11/2026; was 19.00)
 //   LIST_PRICE_USD        optional, the regular price shown crossed out during the promo, defaults to "19.00"
-//   ADDON_PRICE_USD       optional, price of the 3rd training program sold inside the form, defaults to "9.00"
+//   ADDON_PRICE_USD       optional, price of the 3rd training program sold inside the form, defaults to "4.00"
 import crypto from "node:crypto";
 
 export const PRICE = () => process.env.PRICE_USD || "9.00";
 export const LIST_PRICE = () => process.env.LIST_PRICE_USD || "19.00";
-export const ADDON_PRICE = () => process.env.ADDON_PRICE_USD || "9.00";
+export const ADDON_PRICE = () => process.env.ADDON_PRICE_USD || "4.00";
 export const API = () => (process.env.PAYPAL_ENV === "live" ? "https://api-m.paypal.com" : "https://api-m.sandbox.paypal.com");
 
 export function json(status, body) {

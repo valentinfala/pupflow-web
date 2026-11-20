@@ -380,7 +380,7 @@ try {
 } catch (e) {}
 // 3rd paid program: inert here; the website build (build_site.py) replaces it with the real offer.
 
-// 3rd program for US$9 (website only). Paid state lives on the server; localStorage only remembers it on this device.
+// 3rd program for US$4 (website only). Paid state lives on the server; localStorage only remembers it on this device.
 const ADDON_T = {
   en: { badge:"Premium", h:"Unlock a <em>3rd problem</em>", l:"Add <b>{p}</b> as a 3rd problem in {name}'s plan, with its own step-by-step training.", l0:"Fix a 3rd problem in {name}'s plan, with its own step-by-step training.",
         b1:"Step-by-step training for the 3rd problem, just like the other 2", b2:"Built into {name}'s daily routine and 90-day roadmap", b3:"Personalized for {name}, same as the rest of the plan",
@@ -391,7 +391,7 @@ const ADDON_T = {
         once:"pago único · se suma a este plan", no:"No, gracias, sigo con 2 problemas", wait:"Confirmando tu pago…", fail:"No pudimos completar el pago. No se te cobró nada. Inténtalo de nuevo.",
         off:"Esto no está disponible ahora. Puedes seguir con 2 problemas.", tz:"¿Quieres resolver un 3.er problema? <b>Desbloquéalo</b>", ok:"3.er problema desbloqueado. Elige hasta 3." }
 };
-const ADDON = { paid:false, price:"9", cfg:null };
+const ADDON = { paid:false, price:"4", cfg:null };
 const at = k => ADDON_T[lang][k].replace(/\{name\}/g, (A.dog_name||"").trim() || (lang==="es"?"tu perro":"your dog"));
 const addonKey = () => "pf-addon-" + (PURCHASE && PURCHASE.order);
 try { if (PURCHASE && localStorage.getItem(addonKey())) ADDON.paid = true; } catch (e) {}
@@ -456,7 +456,7 @@ async function addonOffer(val){
       say("wait","ok");
       let d; try { d = await addonPost("capture-addon", Object.assign({ orderID: data.orderID }, buy)); } catch (e) { d = {}; }
       if (!d.ok) { say("fail","err"); return; }
-      try { fbq("track", "Purchase", { value: Number(d.value) || 9, currency: "USD", content_name: "PupFlow 3rd problem", content_type: "product" }, { eventID: d.addon_order }); } catch (e) {}
+      try { fbq("track", "Purchase", { value: Number(d.value) || 4, currency: "USD", content_name: "PupFlow 3rd problem", content_type: "product" }, { eventID: d.addon_order }); } catch (e) {}
       addonUnlocked(val, d);
     },
     onError: () => { if (!ADDON.paid) say("fail","err"); }
